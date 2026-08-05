@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>タイマーテスト</title>
+<style>
+  body{ background:#0b0f14; color:#e7ecf2; font-family:sans-serif; padding:20px; text-align:center; }
+  #count{ font-size:60px; margin:40px 0; font-family:monospace; }
+  button{ font-size:20px; padding:14px 24px; border-radius:10px; border:none; background:#3ddc97; }
+</style>
+</head>
+<body>
+  <h2>この数字が1秒ごとに増えれば正常です</h2>
+  <div id="count">0</div>
+  <button onclick="start()">スタート</button>
+  <p id="status"></p>
+<script>
+let n = 0;
+function start(){
+  document.getElementById('status').textContent = '開始: ' + new Date().toLocaleTimeString();
+  setInterval(()=>{
+    n++;
+    document.getElementById('count').textContent = n;
+  }, 1000);
+}
+</script>
+</body>
+</html>
