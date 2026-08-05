@@ -281,6 +281,13 @@ function toggleKeyVisible(){
 // ---------- helpers ----------
 function sleep(ms){ return new Promise(r=>setTimeout(r, ms)); }
 
+async function fetchWithTimeout(url, opts, timeoutMs){
+  const timeout = new Promise((_, reject)=>{
+    setTimeout(()=>reject(new Error('timeout')), timeoutMs || 15000);
+  });
+  return Promise.race([fetch(url, opts), timeout]);
+}
+
 function pickField(obj, candidates){
   if(!obj) return undefined;
   const keys = Object.keys(obj);
@@ -337,7 +344,7 @@ async function apiGet(path, params){
     let resp;
     let retries = 0;
     while(true){
-      resp = await fetch(full, { headers: { 'x-api-key': key } });
+      resp = await fetchWithTimeout(full, { headers: { 'x-api-key': key } }, 15000);
       if(resp.status === 429 && retries < 4){
         retries++;
         await sleep(1500 * retries);
