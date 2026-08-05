@@ -240,11 +240,6 @@
   </div>
 
   <div id="resultsPanel" style="display:none;">
-    <div class="filters">
-      <div class="chip" data-f="all" onclick="setFilter('all')">すべて</div>
-      <div class="chip active" data-f="up2" onclick="setFilter('up2')">増収増益</div>
-      <div class="chip" data-f="up1" onclick="setFilter('up1')">増収 or 増益</div>
-    </div>
     <div class="summary-line" id="summaryLine"></div>
     <div class="btn-row" style="margin-bottom:14px;">
       <button class="secondary" onclick="exportCsv()">CSVで書き出す</button>
@@ -266,7 +261,6 @@ function getApiBase(){
 }
 let cancelled = false;
 let results = [];
-let currentFilter = 'up2';
 
 // ---------- API key persistence ----------
 const savedKey = localStorage.getItem('jquants_api_key');
@@ -521,33 +515,30 @@ async function runScreen(){
     candidates = candidates.slice(0, maxCount);
 
     let done = 0;
+    let checkedCount = 0;
     for(const c of candidates){
       if(cancelled) break;
       updateProgress(done, candidates.length, c.name || c.code);
       try{
         const records = await fetchFinSummary(c.code);
         const pc = pickCurrentAndPrev(records);
-        if(!pc || !pc.prev){
-          results.push({ code:c.code, name:c.name, announceDate:c.announceDate, status:'na', raw:{note:'比較可能な前年データなし', records} });
-        } else {
+        checkedCount++;
+        if(pc && pc.prev){
           const salesYoy = yoy(pc.current.sales, pc.prev.sales);
           const npYoy = yoy(pc.current.np, pc.prev.np);
           const opYoy = yoy(pc.current.op, pc.prev.op);
           const salesUp = salesYoy != null && salesYoy > 0;
           const profitYoy = npYoy != null ? npYoy : opYoy;
           const profitUp = profitYoy != null && profitYoy > 0;
-          let status;
-          if(salesYoy == null && profitYoy == null) status = 'na';
-          else if(salesUp && profitUp) status = 'up2';
-          else if(salesUp || profitUp) status = 'up1';
-          else status = 'down';
-          results.push({
-            code:c.code, name:c.name, announceDate:c.announceDate, status,
-            periodLabel: (pc.current.periodEnd||'') + ' (' + (pc.current.periodType||'?') + ')',
-            sales:{cur:pc.current.sales, prev:pc.prev.sales, yoy:salesYoy},
-            profit:{cur:pc.current.np!=null?pc.current.np:pc.current.op, prev:pc.prev.np!=null?pc.prev.np:pc.prev.op, yoy:profitYoy, label: pc.current.np!=null?'純利益':'営業利益'},
-            raw:{current:pc.current.raw, prev:pc.prev.raw}
-          });
+          if(salesUp && profitUp){
+            results.push({
+              code:c.code, name:c.name, announceDate:c.announceDate, status:'up2',
+              periodLabel: (pc.current.periodEnd||'') + ' (' + (pc.current.periodType||'?') + ')',
+              sales:{cur:pc.current.sales, prev:pc.prev.sales, yoy:salesYoy},
+              profit:{cur:pc.current.np!=null?pc.current.np:pc.current.op, prev:pc.prev.np!=null?pc.prev.np:pc.prev.op, yoy:profitYoy, label: pc.current.np!=null?'純利益':'営業利益'},
+              raw:{current:pc.current.raw, prev:pc.prev.raw}
+            });
+          }
         }
       }catch(e){
         logMsg(`${c.code} ${c.name||''}: 取得失敗 (${e.message})`);
@@ -555,11 +546,12 @@ async function runScreen(){
       done++;
       await sleep(400);
     }
+    window.__checkedCount = checkedCount;
   }catch(e){
     logMsg('エラー: ' + e.message);
   }
 
-  updateProgress(results.length, results.length, '完了');
+  updateProgress(done, done, '完了');
   runBtn.disabled = false;
   runBtn.textContent = '検索開始';
   renderResults();
@@ -581,39 +573,26 @@ function yoyClass(n){
   return n > 0 ? 'up' : (n < 0 ? 'down' : 'flat');
 }
 function badgeInfo(status){
-  if(status === 'up2') return {cls:'up2', label:'増収増益'};
-  if(status === 'up1') return {cls:'up1', label:'増収 or 増益'};
-  if(status === 'down') return {cls:'down', label:'減収 or 減益'};
-  return {cls:'na', label:'データ不足'};
-}
-
-function setFilter(f){
-  currentFilter = f;
-  document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('active', c.dataset.f===f));
-  renderResults();
+  return {cls:'up2', label:'増収増益'};
 }
 
 function renderResults(){
   document.getElementById('resultsPanel').style.display = 'block';
   let list = results.slice();
-  if(currentFilter === 'up2') list = list.filter(r=>r.status==='up2');
-  if(currentFilter === 'up1') list = list.filter(r=>r.status==='up2'||r.status==='up1');
-  // sort: up2 first, then by profit yoy desc
+  // sort by profit yoy desc
   list.sort((a,b)=>{
-    const order = {up2:0, up1:1, down:2, na:3};
-    if(order[a.status] !== order[b.status]) return order[a.status]-order[b.status];
     const ay = (a.profit&&a.profit.yoy!=null) ? a.profit.yoy : -9999;
     const by = (b.profit&&b.profit.yoy!=null) ? b.profit.yoy : -9999;
     return by-ay;
   });
 
-  const up2Count = results.filter(r=>r.status==='up2').length;
+  const checkedCount = window.__checkedCount || results.length;
   document.getElementById('summaryLine').textContent =
-    `検索対象 ${results.length}件 / 増収増益 ${up2Count}件`;
+    `チェック対象 ${checkedCount}件 / 増収増益 ${results.length}件`;
 
   const cardsEl = document.getElementById('cards');
   if(!list.length){
-    cardsEl.innerHTML = '<div class="empty">該当する銘柄がありません</div>';
+    cardsEl.innerHTML = '<div class="empty">増収増益の銘柄が見つかりませんでした</div>';
     return;
   }
 
