@@ -201,7 +201,7 @@
 <header>
   <div class="ttl">TSE Earnings Screener</div>
   <h1>決算ピックアップ</h1>
-  <div class="sub">増収・増益の銘柄をトータル成績TOP10でピックアップ(J-Quants API)</div>
+  <div class="sub">増収・増益+株価モメンタムで株価上昇の可能性が高いTOP10をピックアップ(J-Quants API)</div>
 </header>
 
 <main>
@@ -226,7 +226,7 @@
       </div>
       <div>
         <label>最大チェック件数</label>
-        <input type="number" id="maxCount" value="80" min="1" max="500">
+        <input type="number" id="maxCount" value="15" min="1" max="500">
       </div>
     </div>
     <label>直接コード指定(任意・カンマ区切り, 例: 7203,6758)</label>
@@ -248,7 +248,7 @@
   </div>
 
   <div class="panel note">
-    データ取得元: J-Quants API (JPX)。無料プランはレート制限・データ遅延があります。決算発表予定日や財務項目のAPI仕様は変更される場合があるため、想定外の結果になった場合は各カードの「詳細JSON」から実際のレスポンスを確認してください。本アプリは投資助言を行うものではありません。
+    データ取得元: J-Quants API (JPX)。無料プランはレート制限(5リクエスト/分)・データ遅延があります。決算発表予定日や財務項目のAPI仕様は変更される場合があるため、想定外の結果になった場合は各カードの「詳細JSON」から実際のレスポンスを確認してください。株価騰落率はFreeプラン仕様上、直近1週間程度のデータのみに基づく簡易的な指標であり、将来の株価上昇を保証するものではありません。本アプリは投資助言を行うものではありません。
   </div>
 
 </main>
@@ -280,6 +280,18 @@ function toggleKeyVisible(){
 
 // ---------- helpers ----------
 function sleep(ms){ return new Promise(r=>setTimeout(r, ms)); }
+
+// J-Quants Freeプランのレート制限(5req/分)に対応する共通スロットラー
+let __lastRequestTime = 0;
+const RATE_LIMIT_MS = 13000; // 12秒(5req/分)+ 安全マージン1秒
+async function rateLimitWait(){
+  const now = Date.now();
+  const elapsed = now - __lastRequestTime;
+  if(elapsed < RATE_LIMIT_MS){
+    await sleep(RATE_LIMIT_MS - elapsed);
+  }
+  __lastRequestTime = Date.now();
+}
 
 function pickField(obj, candidates){
   if(!obj) return undefined;
@@ -337,6 +349,7 @@ async function apiGetInner(path, params){
     let resp;
     let retries = 0;
     while(true){
+      await rateLimitWait();
       resp = await fetch(full, { headers: { 'x-api-key': key } });
       if(resp.status === 429 && retries < 4){
         retries++;
@@ -438,6 +451,22 @@ async function fetchFinSummary(code){
   }).filter(x=>x.periodEnd);
 }
 
+// Freeプランは直近1週間分の株価四本値のみ取得可能。その範囲内の騰落率を「モメンタム」として使う。
+async function fetchPriceMomentum(code){
+  const raw = await apiGet('/equities/bars/daily', { code: code });
+  const bars = raw.map(r=>{
+    return {
+      date: pickField(r, ['Date']),
+      close: numOrNull(pickField(r, ['AdjC','C','Close']))
+    };
+  }).filter(x=>x.date && x.close != null)
+    .sort((a,b)=> new Date(a.date) - new Date(b.date));
+  if(bars.length < 2) return { pct: null, days: bars.length, raw: bars };
+  const first = bars[0], last = bars[bars.length-1];
+  const pct = yoy(last.close, first.close);
+  return { pct, days: bars.length, first, last, raw: bars };
+}
+
 function numOrNull(v){
   if(v === undefined || v === null || v === '') return null;
   const n = Number(v);
@@ -517,7 +546,7 @@ async function runScreen(){
       }
     }
 
-    const maxCount = Number(document.getElementById('maxCount').value) || 80;
+    const maxCount = Number(document.getElementById('maxCount').value) || 15;
     candidates = candidates.slice(0, maxCount);
     state.total = candidates.length;
 
@@ -538,12 +567,21 @@ async function runScreen(){
           const profitUp = profitYoy != null && profitYoy > 0;
 
           if(salesUp && profitUp){
-            const totalScore = salesYoy + profitYoy;
+            let momentum = null, momentumDays = 0;
+            try{
+              const pm = await fetchPriceMomentum(c.code);
+              momentum = pm.pct;
+              momentumDays = pm.days;
+            }catch(e){
+              logMsg(`${c.code} ${c.name||''}: 株価データ取得失敗 (${e.message})`);
+            }
+            const totalScore = salesYoy + profitYoy + (momentum||0);
             results.push({
               code:c.code, name:c.name, announceDate:c.announceDate, status:'up2',
               periodLabel: (pc.current.periodEnd||'') + ' (' + (pc.current.periodType||'?') + ')',
               sales:{cur:pc.current.sales, prev:pc.prev.sales, yoy:salesYoy},
               profit:{cur:pc.current.np!=null?pc.current.np:pc.current.op, prev:pc.prev.np!=null?pc.prev.np:pc.prev.op, yoy:profitYoy, label: pc.current.np!=null?'純利益':'営業利益'},
+              momentum:{pct:momentum, days:momentumDays},
               totalScore,
               raw:{current:pc.current.raw, prev:pc.prev.raw}
             });
@@ -559,7 +597,7 @@ async function runScreen(){
   }
 
   const globalDeadline = new Promise(resolve=>{
-    setTimeout(()=>resolve('deadline'), 90000);
+    setTimeout(()=>resolve('deadline'), 1200000); // 20分
   });
 
   try{
@@ -607,7 +645,7 @@ function renderResults(){
 
   const checkedCount = window.__checkedCount || results.length;
   document.getElementById('summaryLine').textContent =
-    `チェック対象 ${checkedCount}件 / 増収増益 ${matchedCount}件中 トータル成績TOP${list.length}を表示`;
+    `チェック対象 ${checkedCount}件 / 増収増益 ${matchedCount}件中 株価上昇の可能性が高いTOP${list.length}を表示`;
 
   const cardsEl = document.getElementById('cards');
   if(!list.length){
@@ -629,6 +667,12 @@ function renderResults(){
         <div class="m-yoy ${yoyClass(r.profit.yoy)}">${fmtYoy(r.profit.yoy)}</div>
         <div class="m-detail">${fmtYen(r.profit.prev)} → ${fmtYen(r.profit.cur)}</div>
       </div>` : `<div class="metric"><div class="m-label">利益 YoY</div><div class="m-yoy flat">—</div></div>`;
+    const momentumBlock = (r.momentum && r.momentum.pct != null) ? `
+      <div class="metric">
+        <div class="m-label">株価騰落率(直近${r.momentum.days}日)</div>
+        <div class="m-yoy ${yoyClass(r.momentum.pct)}">${fmtYoy(r.momentum.pct)}</div>
+        <div class="m-detail">Freeプラン仕様で直近1週間のみ</div>
+      </div>` : `<div class="metric"><div class="m-label">株価騰落率</div><div class="m-yoy flat">データなし</div></div>`;
 
     return `
     <div class="card">
@@ -640,7 +684,7 @@ function renderResults(){
         <div class="badge ${b.cls}">${b.label}</div>
       </div>
       ${r.periodLabel ? `<div class="card-code" style="margin-top:6px;">対象期: ${escapeHtml(r.periodLabel)} ・ 成績合計 ${fmtYoy(r.totalScore)}</div>` : ''}
-      <div class="metrics">${salesBlock}${profitBlock}</div>
+      <div class="metrics" style="grid-template-columns:1fr 1fr 1fr;">${salesBlock}${profitBlock}${momentumBlock}</div>
       <div class="card-foot">
         <span>#${i+1}</span>
         <button onclick="toggleRaw(${i})">詳細JSON</button>
@@ -661,7 +705,7 @@ function escapeHtml(s){
 function exportCsv(){
   if(!results.length){ alert('データがありません'); return; }
   const top = results.slice().sort((a,b)=> (b.totalScore||-9999) - (a.totalScore||-9999)).slice(0, 10);
-  const rows = [['順位','コード','社名','発表予定日','対象期','判定','売上高YoY%','利益YoY%','利益種別','成績合計%']];
+  const rows = [['順位','コード','社名','発表予定日','対象期','判定','売上高YoY%','利益YoY%','利益種別','株価騰落率%','成績合計%']];
   top.forEach((r,i)=>{
     rows.push([
       i+1, r.code, r.name||'', r.announceDate||'', r.periodLabel||'',
@@ -669,6 +713,7 @@ function exportCsv(){
       r.sales && r.sales.yoy!=null ? r.sales.yoy.toFixed(1) : '',
       r.profit && r.profit.yoy!=null ? r.profit.yoy.toFixed(1) : '',
       r.profit ? (r.profit.label||'') : '',
+      r.momentum && r.momentum.pct!=null ? r.momentum.pct.toFixed(1) : '',
       r.totalScore!=null ? r.totalScore.toFixed(1) : ''
     ]);
   });
