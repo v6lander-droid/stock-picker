@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>決算ピックアップ | J-Quants</title>
+<style>
+  :root{
+    --bg: #0b0f14;
+    --panel: #121821;
+    --panel2: #171f2b;
+    --line: #232d3b;
+    --text: #e7ecf2;
+    --sub: #8a97a8;
+    --accent: #3ddc97;
+    --accent-dim: #1f6b4d;
+    --up: #3ddc97;
+    --down: #ff5d6c;
+    --warn: #e8b34a;
+    --mono: 'SF Mono', 'Menlo', 'Consolas', ui-monospace, monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:60px;
+  }
+  header{
+    position:sticky; top:0; z-index:20;
+    background:rgba(11,15,20,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom:1px solid var(--line);
+    padding:14px 16px 12px;
+  }
+  header .ttl{
+    font-size:13px; letter-spacing:0.18em; color:var(--accent);
+    font-family:var(--mono); text-transform:uppercase; margin-bottom:2px;
+  }
+  header h1{
+    font-size:19px; margin:0; font-weight:700; letter-spacing:0.01em;
+  }
+  header .sub{ font-size:12px; color:var(--sub); margin-top:3px; }
+
+  main{ max-width:720px; margin:0 auto; padding:16px; }
+
+  .panel{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px;
+    margin-bottom:14px;
+  }
+  .panel h2{
+    font-size:12px; color:var(--sub); letter-spacing:0.1em;
+    text-transform:uppercase; margin:0 0 12px; font-family:var(--mono);
+    display:flex; align-items:center; gap:8px;
+  }
+  .panel h2::before{
+    content:''; width:6px; height:6px; background:var(--accent); border-radius:2px; display:inline-block;
+  }
+
+  label{ display:block; font-size:13px; color:var(--sub); margin-bottom:6px; }
+  input[type=text], input[type=password], input[type=number]{
+    width:100%;
+    background:var(--panel2);
+    border:1px solid var(--line);
+    color:var(--text);
+    border-radius:9px;
+    padding:11px 12px;
+    font-size:15px;
+    font-family:var(--mono);
+    margin-bottom:12px;
+  }
+  input:focus{ outline:none; border-color:var(--accent-dim); }
+
+  .row2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+
+  .toggle-key{
+    display:flex; align-items:center; gap:8px; margin:-6px 0 12px;
+  }
+  .toggle-key button{
+    background:none; border:none; color:var(--sub); font-size:12px;
+    text-decoration:underline; padding:0; cursor:pointer;
+  }
+
+  button.primary{
+    width:100%;
+    background:var(--accent);
+    color:#06140f;
+    border:none;
+    border-radius:10px;
+    padding:14px;
+    font-size:15px;
+    font-weight:700;
+    cursor:pointer;
+    letter-spacing:0.02em;
+  }
+  button.primary:disabled{ background:#2a3340; color:#69758a; }
+  button.secondary{
+    width:100%;
+    background:transparent;
+    color:var(--text);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:12px;
+    font-size:14px;
+    cursor:pointer;
+  }
+  button.ghost{
+    background:none; border:1px solid var(--line); color:var(--sub);
+    border-radius:8px; padding:6px 10px; font-size:12px; cursor:pointer;
+  }
+
+  .progress-wrap{ margin-top:12px; }
+  .progress-bar{
+    height:6px; background:var(--panel2); border-radius:4px; overflow:hidden; border:1px solid var(--line);
+  }
+  .progress-fill{
+    height:100%; background:var(--accent); width:0%; transition:width .2s;
+  }
+  .progress-txt{
+    font-family:var(--mono); font-size:12px; color:var(--sub); margin-top:6px;
+    display:flex; justify-content:space-between;
+  }
+
+  .filters{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
+  .chip{
+    font-size:12px; padding:7px 12px; border-radius:20px;
+    border:1px solid var(--line); color:var(--sub); cursor:pointer;
+    font-family:var(--mono); white-space:nowrap;
+  }
+  .chip.active{ background:var(--accent); border-color:var(--accent); color:#06140f; font-weight:700; }
+
+  .summary-line{
+    font-size:12px; color:var(--sub); font-family:var(--mono); margin-bottom:12px;
+  }
+
+  .card{
+    background:var(--panel2);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:13px 14px;
+    margin-bottom:10px;
+  }
+  .card-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:8px; }
+  .card-name{ font-size:15px; font-weight:700; }
+  .card-code{ font-family:var(--mono); font-size:11px; color:var(--sub); margin-top:2px; }
+  .badge{
+    font-family:var(--mono); font-size:11px; font-weight:700;
+    padding:4px 9px; border-radius:20px; white-space:nowrap; flex-shrink:0;
+  }
+  .badge.up2{ background:rgba(61,220,151,0.15); color:var(--up); border:1px solid rgba(61,220,151,0.4); }
+  .badge.up1{ background:rgba(232,179,74,0.13); color:var(--warn); border:1px solid rgba(232,179,74,0.35); }
+  .badge.down{ background:rgba(255,93,108,0.12); color:var(--down); border:1px solid rgba(255,93,108,0.35); }
+  .badge.na{ background:rgba(138,151,168,0.1); color:var(--sub); border:1px solid var(--line); }
+
+  .metrics{ display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:11px; }
+  .metric{
+    background:var(--panel); border:1px solid var(--line); border-radius:9px; padding:9px 10px;
+  }
+  .metric .m-label{ font-size:11px; color:var(--sub); }
+  .metric .m-yoy{ font-family:var(--mono); font-size:16px; font-weight:700; margin-top:2px; }
+  .metric .m-detail{ font-family:var(--mono); font-size:10.5px; color:var(--sub); margin-top:3px; }
+  .up{ color:var(--up); } .down{ color:var(--down); } .flat{ color:var(--sub); }
+
+  .card-foot{
+    display:flex; justify-content:space-between; align-items:center; margin-top:10px;
+    font-size:11px; color:var(--sub); font-family:var(--mono);
+  }
+  .card-foot button{
+    background:none; border:none; color:var(--sub); font-family:var(--mono);
+    text-decoration:underline; font-size:11px; cursor:pointer; padding:0;
+  }
+  .raw{
+    margin-top:8px; background:var(--bg); border:1px solid var(--line); border-radius:8px;
+    padding:8px; font-family:var(--mono); font-size:10.5px; color:var(--sub);
+    white-space:pre-wrap; word-break:break-all; max-height:220px; overflow:auto; display:none;
+  }
+  .raw.show{ display:block; }
+
+  .empty{
+    text-align:center; padding:40px 12px; color:var(--sub); font-size:13px;
+  }
+  .log{
+    font-family:var(--mono); font-size:11px; color:var(--warn);
+    background:rgba(232,179,74,0.08); border:1px solid rgba(232,179,74,0.25);
+    border-radius:9px; padding:10px; margin-top:10px; white-space:pre-wrap; max-height:160px; overflow:auto;
+  }
+  .note{ font-size:11.5px; color:var(--sub); line-height:1.6; margin-top:10px; }
+  .note a{ color:var(--accent); }
+
+  .btn-row{ display:flex; gap:8px; margin-top:10px; }
+  .btn-row > *{ flex:1; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="ttl">TSE Earnings Screener</div>
+  <h1>決算ピックアップ</h1>
+  <div class="sub">今年の決算が前年を上回る銘柄を検出(J-Quants API)</div>
+</header>
+
+<main>
+
+  <div class="panel">
+    <h2>APIキー</h2>
+    <input type="password" id="apiKey" placeholder="J-Quants APIキーを入力" value="VhtYGRPg3W-uj5nF0A5q53mfGDgThEjPcXx57c4tkis">
+    <div class="toggle-key">
+      <button type="button" onclick="toggleKeyVisible()">表示/非表示</button>
+      <span style="font-size:11px;color:var(--sub);">端末のlocalStorageにのみ保存されます</span>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>検索条件</h2>
+    <div class="row2">
+      <div>
+        <label>決算発表予定(今後何日以内)</label>
+        <input type="number" id="daysAhead" value="30" min="1" max="120">
+      </div>
+      <div>
+        <label>最大チェック件数</label>
+        <input type="number" id="maxCount" value="80" min="1" max="500">
+      </div>
+    </div>
+    <label>直接コード指定(任意・カンマ区切り, 例: 7203,6758)</label>
+    <input type="text" id="manualCodes" placeholder="空欄なら決算発表予定日から自動取得">
+    <button class="primary" id="runBtn" onclick="runScreen()">検索開始</button>
+    <div class="progress-wrap" id="progressWrap" style="display:none;">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-txt"><span id="progressTxt">-</span><button class="ghost" onclick="cancelRun()">中止</button></div>
+    </div>
+    <div class="log" id="logBox" style="display:none;"></div>
+  </div>
+
+  <div id="resultsPanel" style="display:none;">
+    <div class="filters">
+      <div class="chip active" data-f="all" onclick="setFilter('all')">すべて</div>
+      <div class="chip" data-f="up2" onclick="setFilter('up2')">増収増益</div>
+      <div class="chip" data-f="up1" onclick="setFilter('up1')">増収 or 増益</div>
+    </div>
+    <div class="summary-line" id="summaryLine"></div>
+    <div class="btn-row" style="margin-bottom:14px;">
+      <button class="secondary" onclick="exportCsv()">CSVで書き出す</button>
+    </div>
+    <div id="cards"></div>
+  </div>
+
+  <div class="panel note">
+    データ取得元: J-Quants API (JPX)。無料プランはレート制限・データ遅延があります。決算発表予定日や財務項目のAPI仕様は変更される場合があるため、想定外の結果になった場合は各カードの「詳細JSON」から実際のレスポンスを確認してください。本アプリは投資助言を行うものではありません。
+  </div>
+
+</main>
+
+<script>
+const API_BASE = 'https://api.jquants.com/v2';
+let cancelled = false;
+let results = [];
+let currentFilter = 'all';
+
+// ---------- API key persistence ----------
+const savedKey = localStorage.getItem('jquants_api_key');
+if (savedKey) document.getElementById('apiKey').value = savedKey;
+document.getElementById('apiKey').addEventListener('change', e=>{
+  localStorage.setItem('jquants_api_key', e.target.value.trim());
+});
+function toggleKeyVisible(){
+  const el = document.getElementById('apiKey');
+  el.type = el.type === 'password' ? 'text' : 'password';
+}
+
+// ---------- helpers ----------
+function sleep(ms){ return new Promise(r=>setTimeout(r, ms)); }
+
+function pickField(obj, candidates){
+  if(!obj) return undefined;
+  const keys = Object.keys(obj);
+  for(const c of candidates){
+    if(obj[c] !== undefined && obj[c] !== null && obj[c] !== '') return obj[c];
+  }
+  const lowerCands = candidates.map(c=>c.toLowerCase());
+  for(const k of keys){
+    if(lowerCands.includes(k.toLowerCase()) && obj[k] !== '' && obj[k] != null) return obj[k];
+  }
+  // substring fallback
+  for(const k of keys){
+    const lk = k.toLowerCase();
+    for(const c of lowerCands){
+      if(lk.includes(c) && obj[k] !== '' && obj[k] != null) return obj[k];
+    }
+  }
+  return undefined;
+}
+
+function findArray(json){
+  if(Array.isArray(json)) return json;
+  if(!json || typeof json !== 'object') return [];
+  if(Array.isArray(json.data)) return json.data;
+  for(const k of Object.keys(json)){
+    if(Array.isArray(json[k])) return json[k];
+  }
+  return [];
+}
+
+function logMsg(msg){
+  const box = document.getElementById('logBox');
+  box.style.display = 'block';
+  box.textContent += msg + '\n';
+  box.scrollTop = box.scrollHeight;
+}
+function clearLog(){
+  const box = document.getElementById('logBox');
+  box.textContent = '';
+  box.style.display = 'none';
+}
+
+async function apiGet(path, params){
+  const key = document.getElementById('apiKey').value.trim();
+  if(!key) throw new Error('APIキーが未入力です');
+  let url = API_BASE + path;
+  const qs = new URLSearchParams(params || {});
+  let collected = [];
+  let guard = 0;
+  while(true){
+    guard++;
+    if(guard > 25) break;
+    const full = url + (qs.toString() ? ('?' + qs.toString()) : '');
+    const resp = await fetch(full, { headers: { 'x-api-key': key } });
+    if(!resp.ok){
+      const txt = await resp.text().catch(()=> '');
+      throw new Error('HTTP ' + resp.status + ' ' + path + ' : ' + txt.slice(0,200));
+    }
+    const json = await resp.json();
+    const arr = findArray(json);
+    collected = collected.concat(arr);
+    const pk = json && (json.pagination_key || json.paginationKey);
+    if(pk){
+      qs.set('pagination_key', pk);
+    } else {
+      break;
+    }
+  }
+  return collected;
+}
+
+// ---------- date helpers ----------
+function fmtDate(d){
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const day = String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${day}`;
+}
+function parseAnyDate(s){
+  if(!s) return null;
+  const str = String(s).replace(/\//g,'-');
+  const d = new Date(str);
+  return isNaN(d.getTime()) ? null : d;
+}
+
+// ---------- step 1: earnings calendar ----------
+async function fetchEarningsCandidates(daysAhead){
+  const today = new Date();
+  const to = new Date(today.getTime() + daysAhead*86400000);
+  const fromStr = fmtDate(today);
+  const toStr = fmtDate(to);
+
+  let raw = [];
+  try{
+    raw = await apiGet('/equities/earnings-calendar', { from: fromStr, to: toStr });
+  }catch(e){
+    logMsg('決算発表予定日(期間指定)の取得に失敗: ' + e.message + ' / パラメータなしで再試行します');
+    try{
+      raw = await apiGet('/equities/earnings-calendar', {});
+    }catch(e2){
+      logMsg('決算発表予定日の取得に失敗しました: ' + e2.message);
+      return [];
+    }
+  }
+
+  const list = raw.map(r=>{
+    const code = pickField(r, ['Code','LocalCode','code']);
+    const name = pickField(r, ['CompanyName','Company','CoName','name']);
+    const dateVal = pickField(r, ['Date','AnnouncementDate','DisclosedDate','date']);
+    return { code: code ? String(code) : null, name: name || '(社名不明)', announceDate: dateVal, raw: r };
+  }).filter(x=>x.code);
+
+  // filter by date range client-side too (in case server ignored from/to)
+  const filtered = list.filter(x=>{
+    const d = parseAnyDate(x.announceDate);
+    if(!d) return true; // keep if date unparsable, better to include than drop
+    return d >= new Date(today.toDateString()) && d <= to;
+  });
+
+  // dedupe by code, keep earliest announce date
+  const map = new Map();
+  for(const item of (filtered.length ? filtered : list)){
+    if(!map.has(item.code)) map.set(item.code, item);
+  }
+  return Array.from(map.values());
+}
+
+// ---------- step 2: financial summary ----------
+async function fetchFinSummary(code){
+  const raw = await apiGet('/fins/summary', { code: code });
+  return raw.map(r=>{
+    return {
+      periodType: pickField(r, ['CurPerType','TypeOfCurrentPeriod','PeriodType']),
+      periodEnd: pickField(r, ['CurPerEn','CurrentPeriodEndDate','PeriodEnd']),
+      discDate: pickField(r, ['DiscDate','DisclosedDate']),
+      sales: numOrNull(pickField(r, ['Sales','NetSales'])),
+      op: numOrNull(pickField(r, ['OP','OperatingProfit'])),
+      np: numOrNull(pickField(r, ['NP','Profit','NetIncome'])),
+      raw: r
+    };
+  }).filter(x=>x.periodEnd);
+}
+
+function numOrNull(v){
+  if(v === undefined || v === null || v === '') return null;
+  const n = Number(v);
+  return isNaN(n) ? null : n;
+}
+
+function pickCurrentAndPrev(records){
+  const withDates = records
+    .map(r=>({...r, endD: parseAnyDate(r.periodEnd)}))
+    .filter(r=>r.endD)
+    .sort((a,b)=> b.endD - a.endD);
+  if(!withDates.length) return null;
+  const current = withDates[0];
+  // find same periodType roughly 1 year (300-430 days) before current
+  let prev = withDates.find(r =>
+    r !== current &&
+    r.periodType && current.periodType &&
+    r.periodType === current.periodType &&
+    (current.endD - r.endD) > 300*86400000 &&
+    (current.endD - r.endD) < 430*86400000
+  );
+  if(!prev){
+    // fallback: closest to exactly 1 year before, any period type
+    let best = null, bestDiff = Infinity;
+    const target = new Date(current.endD.getTime() - 365*86400000);
+    for(const r of withDates){
+      if(r === current) continue;
+      const diff = Math.abs(r.endD - target);
+      if(diff < bestDiff && diff < 60*86400000){ best = r; bestDiff = diff; }
+    }
+    prev = best;
+  }
+  return { current, prev };
+}
+
+function yoy(cur, prev){
+  if(cur == null || prev == null || prev === 0) return null;
+  return ((cur - prev) / Math.abs(prev)) * 100;
+}
+
+// ---------- run ----------
+function updateProgress(done, total, label){
+  document.getElementById('progressWrap').style.display = 'block';
+  const pct = total ? Math.round(done/total*100) : 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressTxt').innerHTML =
+    `<span>${label || ''}</span><span>${done}/${total}</span>`;
+}
+
+function cancelRun(){ cancelled = true; }
+
+async function runScreen(){
+  const key = document.getElementById('apiKey').value.trim();
+  if(!key){ alert('APIキーを入力してください'); return; }
+  cancelled = false;
+  clearLog();
+  results = [];
+  document.getElementById('cards').innerHTML = '';
+  document.getElementById('resultsPanel').style.display = 'none';
+  const runBtn = document.getElementById('runBtn');
+  runBtn.disabled = true;
+  runBtn.textContent = '取得中...';
+
+  try{
+    const manual = document.getElementById('manualCodes').value.trim();
+    let candidates = [];
+    if(manual){
+      candidates = manual.split(',').map(s=>s.trim()).filter(Boolean).map(c=>({code:c, name:'', announceDate:null}));
+    } else {
+      updateProgress(0, 1, '決算発表予定日を取得中');
+      const daysAhead = Number(document.getElementById('daysAhead').value) || 30;
+      candidates = await fetchEarningsCandidates(daysAhead);
+      if(!candidates.length){
+        logMsg('決算発表予定の銘柄が見つかりませんでした。直接コード指定で試してください。');
+      }
+    }
+
+    const maxCount = Number(document.getElementById('maxCount').value) || 80;
+    candidates = candidates.slice(0, maxCount);
+
+    let done = 0;
+    for(const c of candidates){
+      if(cancelled) break;
+      updateProgress(done, candidates.length, c.name || c.code);
+      try{
+        const records = await fetchFinSummary(c.code);
+        const pc = pickCurrentAndPrev(records);
+        if(!pc || !pc.prev){
+          results.push({ code:c.code, name:c.name, announceDate:c.announceDate, status:'na', raw:{note:'比較可能な前年データなし', records} });
+        } else {
+          const salesYoy = yoy(pc.current.sales, pc.prev.sales);
+          const npYoy = yoy(pc.current.np, pc.prev.np);
+          const opYoy = yoy(pc.current.op, pc.prev.op);
+          const salesUp = salesYoy != null && salesYoy > 0;
+          const profitYoy = npYoy != null ? npYoy : opYoy;
+          const profitUp = profitYoy != null && profitYoy > 0;
+          let status;
+          if(salesYoy == null && profitYoy == null) status = 'na';
+          else if(salesUp && profitUp) status = 'up2';
+          else if(salesUp || profitUp) status = 'up1';
+          else status = 'down';
+          results.push({
+            code:c.code, name:c.name, announceDate:c.announceDate, status,
+            periodLabel: (pc.current.periodEnd||'') + ' (' + (pc.current.periodType||'?') + ')',
+            sales:{cur:pc.current.sales, prev:pc.prev.sales, yoy:salesYoy},
+            profit:{cur:pc.current.np!=null?pc.current.np:pc.current.op, prev:pc.prev.np!=null?pc.prev.np:pc.prev.op, yoy:profitYoy, label: pc.current.np!=null?'純利益':'営業利益'},
+            raw:{current:pc.current.raw, prev:pc.prev.raw}
+          });
+        }
+      }catch(e){
+        logMsg(`${c.code} ${c.name||''}: 取得失敗 (${e.message})`);
+      }
+      done++;
+      await sleep(220);
+    }
+  }catch(e){
+    logMsg('エラー: ' + e.message);
+  }
+
+  updateProgress(results.length, results.length, '完了');
+  runBtn.disabled = false;
+  runBtn.textContent = '検索開始';
+  renderResults();
+}
+
+// ---------- render ----------
+function fmtYen(n){
+  if(n == null) return '—';
+  const oku = n / 100000000;
+  return oku.toFixed(1) + '億円';
+}
+function fmtYoy(n){
+  if(n == null) return '—';
+  const s = n > 0 ? '+' : '';
+  return s + n.toFixed(1) + '%';
+}
+function yoyClass(n){
+  if(n == null) return 'flat';
+  return n > 0 ? 'up' : (n < 0 ? 'down' : 'flat');
+}
+function badgeInfo(status){
+  if(status === 'up2') return {cls:'up2', label:'増収増益'};
+  if(status === 'up1') return {cls:'up1', label:'増収 or 増益'};
+  if(status === 'down') return {cls:'down', label:'減収 or 減益'};
+  return {cls:'na', label:'データ不足'};
+}
+
+function setFilter(f){
+  currentFilter = f;
+  document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('active', c.dataset.f===f));
+  renderResults();
+}
+
+function renderResults(){
+  document.getElementById('resultsPanel').style.display = 'block';
+  let list = results.slice();
+  if(currentFilter === 'up2') list = list.filter(r=>r.status==='up2');
+  if(currentFilter === 'up1') list = list.filter(r=>r.status==='up2'||r.status==='up1');
+  // sort: up2 first, then by profit yoy desc
+  list.sort((a,b)=>{
+    const order = {up2:0, up1:1, down:2, na:3};
+    if(order[a.status] !== order[b.status]) return order[a.status]-order[b.status];
+    const ay = (a.profit&&a.profit.yoy!=null) ? a.profit.yoy : -9999;
+    const by = (b.profit&&b.profit.yoy!=null) ? b.profit.yoy : -9999;
+    return by-ay;
+  });
+
+  const up2Count = results.filter(r=>r.status==='up2').length;
+  document.getElementById('summaryLine').textContent =
+    `検索対象 ${results.length}件 / 増収増益 ${up2Count}件`;
+
+  const cardsEl = document.getElementById('cards');
+  if(!list.length){
+    cardsEl.innerHTML = '<div class="empty">該当する銘柄がありません</div>';
+    return;
+  }
+
+  cardsEl.innerHTML = list.map((r,i)=>{
+    const b = badgeInfo(r.status);
+    const salesBlock = r.sales ? `
+      <div class="metric">
+        <div class="m-label">売上高 YoY</div>
+        <div class="m-yoy ${yoyClass(r.sales.yoy)}">${fmtYoy(r.sales.yoy)}</div>
+        <div class="m-detail">${fmtYen(r.sales.prev)} → ${fmtYen(r.sales.cur)}</div>
+      </div>` : `<div class="metric"><div class="m-label">売上高 YoY</div><div class="m-yoy flat">—</div></div>`;
+    const profitBlock = r.profit ? `
+      <div class="metric">
+        <div class="m-label">${r.profit.label||'利益'} YoY</div>
+        <div class="m-yoy ${yoyClass(r.profit.yoy)}">${fmtYoy(r.profit.yoy)}</div>
+        <div class="m-detail">${fmtYen(r.profit.prev)} → ${fmtYen(r.profit.cur)}</div>
+      </div>` : `<div class="metric"><div class="m-label">利益 YoY</div><div class="m-yoy flat">—</div></div>`;
+
+    return `
+    <div class="card">
+      <div class="card-top">
+        <div>
+          <div class="card-name">${escapeHtml(r.name||'(社名不明)')}</div>
+          <div class="card-code">${escapeHtml(r.code)}${r.announceDate ? ' ・ 発表予定 ' + escapeHtml(String(r.announceDate)) : ''}</div>
+        </div>
+        <div class="badge ${b.cls}">${b.label}</div>
+      </div>
+      ${r.periodLabel ? `<div class="card-code" style="margin-top:6px;">対象期: ${escapeHtml(r.periodLabel)}</div>` : ''}
+      <div class="metrics">${salesBlock}${profitBlock}</div>
+      <div class="card-foot">
+        <span>#${i+1}</span>
+        <button onclick="toggleRaw(${i})">詳細JSON</button>
+      </div>
+      <div class="raw" id="raw-${i}">${escapeHtml(JSON.stringify(r.raw, null, 2))}</div>
+    </div>`;
+  }).join('');
+}
+
+function toggleRaw(i){
+  document.getElementById('raw-'+i).classList.toggle('show');
+}
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// ---------- CSV export ----------
+function exportCsv(){
+  if(!results.length){ alert('データがありません'); return; }
+  const rows = [['コード','社名','発表予定日','対象期','判定','売上高YoY%','利益YoY%','利益種別']];
+  for(const r of results){
+    rows.push([
+      r.code, r.name||'', r.announceDate||'', r.periodLabel||'',
+      badgeInfo(r.status).label,
+      r.sales && r.sales.yoy!=null ? r.sales.yoy.toFixed(1) : '',
+      r.profit && r.profit.yoy!=null ? r.profit.yoy.toFixed(1) : '',
+      r.profit ? (r.profit.label||'') : ''
+    ]);
+  }
+  const csv = '\uFEFF' + rows.map(row=>row.map(v=>{
+    const s = String(v).replace(/"/g,'""');
+    return /[",\n]/.test(s) ? `"${s}"` : s;
+  }).join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'earnings_screen_' + fmtDate(new Date()) + '.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>
