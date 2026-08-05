@@ -201,7 +201,7 @@
 <header>
   <div class="ttl">TSE Earnings Screener</div>
   <h1>決算ピックアップ</h1>
-  <div class="sub">今年の決算が前年を上回る銘柄を検出(J-Quants API)</div>
+  <div class="sub">増収・増益・増配の銘柄をトータル成績TOP10でピックアップ(J-Quants API)</div>
 </header>
 
 <main>
@@ -438,6 +438,18 @@ async function fetchFinSummary(code){
   }).filter(x=>x.periodEnd);
 }
 
+async function fetchDividend(code){
+  const raw = await apiGet('/fins/dividend', { code: code });
+  return raw.map(r=>{
+    return {
+      periodType: pickField(r, ['CurPerType','TypeOfCurrentPeriod','PeriodType','FiscalYear']),
+      periodEnd: pickField(r, ['CurPerEn','CurrentPeriodEndDate','PeriodEnd','RecordDate','Date']),
+      dps: numOrNull(pickField(r, ['DPS','AnnualDPS','GrossDividendPerShare','DividendPerShare','Dividend','div','dps'])),
+      raw: r
+    };
+  }).filter(x=>x.periodEnd);
+}
+
 function numOrNull(v){
   if(v === undefined || v === null || v === '') return null;
   const n = Number(v);
@@ -536,12 +548,30 @@ async function runScreen(){
           const salesUp = salesYoy != null && salesYoy > 0;
           const profitYoy = npYoy != null ? npYoy : opYoy;
           const profitUp = profitYoy != null && profitYoy > 0;
-          if(salesUp && profitUp){
+
+          let dividendYoy = null, dividendUp = false, dpsCur = null, dpsPrev = null;
+          try{
+            const divRecords = await fetchDividend(c.code);
+            const dc = pickCurrentAndPrev(divRecords);
+            if(dc && dc.prev && dc.current.dps != null && dc.prev.dps != null){
+              dpsCur = dc.current.dps;
+              dpsPrev = dc.prev.dps;
+              dividendYoy = yoy(dpsCur, dpsPrev);
+              dividendUp = dividendYoy != null && dividendYoy > 0;
+            }
+          }catch(e){
+            logMsg(`${c.code} ${c.name||''}: 配当データ取得失敗 (${e.message})`);
+          }
+
+          if(salesUp && profitUp && dividendUp){
+            const totalScore = salesYoy + profitYoy + dividendYoy;
             results.push({
-              code:c.code, name:c.name, announceDate:c.announceDate, status:'up2',
+              code:c.code, name:c.name, announceDate:c.announceDate, status:'up3',
               periodLabel: (pc.current.periodEnd||'') + ' (' + (pc.current.periodType||'?') + ')',
               sales:{cur:pc.current.sales, prev:pc.prev.sales, yoy:salesYoy},
               profit:{cur:pc.current.np!=null?pc.current.np:pc.current.op, prev:pc.prev.np!=null?pc.prev.np:pc.prev.op, yoy:profitYoy, label: pc.current.np!=null?'純利益':'営業利益'},
+              dividend:{cur:dpsCur, prev:dpsPrev, yoy:dividendYoy},
+              totalScore,
               raw:{current:pc.current.raw, prev:pc.prev.raw}
             });
           }
@@ -591,26 +621,24 @@ function yoyClass(n){
   return n > 0 ? 'up' : (n < 0 ? 'down' : 'flat');
 }
 function badgeInfo(status){
-  return {cls:'up2', label:'増収増益'};
+  return {cls:'up2', label:'増収増益増配'};
 }
 
 function renderResults(){
   document.getElementById('resultsPanel').style.display = 'block';
   let list = results.slice();
-  // sort by profit yoy desc
-  list.sort((a,b)=>{
-    const ay = (a.profit&&a.profit.yoy!=null) ? a.profit.yoy : -9999;
-    const by = (b.profit&&b.profit.yoy!=null) ? b.profit.yoy : -9999;
-    return by-ay;
-  });
+  // sort by total score desc, then take TOP10
+  list.sort((a,b)=> (b.totalScore||-9999) - (a.totalScore||-9999));
+  const matchedCount = list.length;
+  list = list.slice(0, 10);
 
   const checkedCount = window.__checkedCount || results.length;
   document.getElementById('summaryLine').textContent =
-    `チェック対象 ${checkedCount}件 / 増収増益 ${results.length}件`;
+    `チェック対象 ${checkedCount}件 / 増収増益増配 ${matchedCount}件中 トータル成績TOP${list.length}を表示`;
 
   const cardsEl = document.getElementById('cards');
   if(!list.length){
-    cardsEl.innerHTML = '<div class="empty">増収増益の銘柄が見つかりませんでした</div>';
+    cardsEl.innerHTML = '<div class="empty">増収増益増配の銘柄が見つかりませんでした</div>';
     return;
   }
 
@@ -628,6 +656,12 @@ function renderResults(){
         <div class="m-yoy ${yoyClass(r.profit.yoy)}">${fmtYoy(r.profit.yoy)}</div>
         <div class="m-detail">${fmtYen(r.profit.prev)} → ${fmtYen(r.profit.cur)}</div>
       </div>` : `<div class="metric"><div class="m-label">利益 YoY</div><div class="m-yoy flat">—</div></div>`;
+    const divBlock = r.dividend ? `
+      <div class="metric">
+        <div class="m-label">1株配当 YoY</div>
+        <div class="m-yoy ${yoyClass(r.dividend.yoy)}">${fmtYoy(r.dividend.yoy)}</div>
+        <div class="m-detail">${r.dividend.prev!=null?r.dividend.prev+'円':'—'} → ${r.dividend.cur!=null?r.dividend.cur+'円':'—'}</div>
+      </div>` : `<div class="metric"><div class="m-label">1株配当 YoY</div><div class="m-yoy flat">—</div></div>`;
 
     return `
     <div class="card">
@@ -638,8 +672,8 @@ function renderResults(){
         </div>
         <div class="badge ${b.cls}">${b.label}</div>
       </div>
-      ${r.periodLabel ? `<div class="card-code" style="margin-top:6px;">対象期: ${escapeHtml(r.periodLabel)}</div>` : ''}
-      <div class="metrics">${salesBlock}${profitBlock}</div>
+      ${r.periodLabel ? `<div class="card-code" style="margin-top:6px;">対象期: ${escapeHtml(r.periodLabel)} ・ 成績合計 ${fmtYoy(r.totalScore)}</div>` : ''}
+      <div class="metrics" style="grid-template-columns:1fr 1fr 1fr;">${salesBlock}${profitBlock}${divBlock}</div>
       <div class="card-foot">
         <span>#${i+1}</span>
         <button onclick="toggleRaw(${i})">詳細JSON</button>
@@ -659,16 +693,19 @@ function escapeHtml(s){
 // ---------- CSV export ----------
 function exportCsv(){
   if(!results.length){ alert('データがありません'); return; }
-  const rows = [['コード','社名','発表予定日','対象期','判定','売上高YoY%','利益YoY%','利益種別']];
-  for(const r of results){
+  const top = results.slice().sort((a,b)=> (b.totalScore||-9999) - (a.totalScore||-9999)).slice(0, 10);
+  const rows = [['順位','コード','社名','発表予定日','対象期','判定','売上高YoY%','利益YoY%','利益種別','配当YoY%','成績合計%']];
+  top.forEach((r,i)=>{
     rows.push([
-      r.code, r.name||'', r.announceDate||'', r.periodLabel||'',
+      i+1, r.code, r.name||'', r.announceDate||'', r.periodLabel||'',
       badgeInfo(r.status).label,
       r.sales && r.sales.yoy!=null ? r.sales.yoy.toFixed(1) : '',
       r.profit && r.profit.yoy!=null ? r.profit.yoy.toFixed(1) : '',
-      r.profit ? (r.profit.label||'') : ''
+      r.profit ? (r.profit.label||'') : '',
+      r.dividend && r.dividend.yoy!=null ? r.dividend.yoy.toFixed(1) : '',
+      r.totalScore!=null ? r.totalScore.toFixed(1) : ''
     ]);
-  }
+  });
   const csv = '\uFEFF' + rows.map(row=>row.map(v=>{
     const s = String(v).replace(/"/g,'""');
     return /[",\n]/.test(s) ? `"${s}"` : s;
@@ -677,7 +714,7 @@ function exportCsv(){
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = 'earnings_screen_' + fmtDate(new Date()) + '.csv';
+  a.download = 'earnings_screen_top10_' + fmtDate(new Date()) + '.csv';
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
