@@ -241,8 +241,8 @@
 
   <div id="resultsPanel" style="display:none;">
     <div class="filters">
-      <div class="chip active" data-f="all" onclick="setFilter('all')">すべて</div>
-      <div class="chip" data-f="up2" onclick="setFilter('up2')">増収増益</div>
+      <div class="chip" data-f="all" onclick="setFilter('all')">すべて</div>
+      <div class="chip active" data-f="up2" onclick="setFilter('up2')">増収増益</div>
       <div class="chip" data-f="up1" onclick="setFilter('up1')">増収 or 増益</div>
     </div>
     <div class="summary-line" id="summaryLine"></div>
@@ -266,7 +266,7 @@ function getApiBase(){
 }
 let cancelled = false;
 let results = [];
-let currentFilter = 'all';
+let currentFilter = 'up2';
 
 // ---------- API key persistence ----------
 const savedKey = localStorage.getItem('jquants_api_key');
