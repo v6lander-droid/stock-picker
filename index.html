@@ -213,6 +213,8 @@
       <button type="button" onclick="toggleKeyVisible()">表示/非表示</button>
       <span style="font-size:11px;color:var(--sub);">端末のlocalStorageにのみ保存されます</span>
     </div>
+    <label>プロキシURL(CORS回避用Cloudflare Worker)</label>
+    <input type="text" id="proxyUrl" placeholder="https://xxxx.workers.dev" value="https://snowy-wind-a478.v6lander.workers.dev">
   </div>
 
   <div class="panel">
@@ -257,7 +259,11 @@
 </main>
 
 <script>
-const API_BASE = 'https://api.jquants.com/v2';
+function getApiBase(){
+  const proxy = document.getElementById('proxyUrl').value.trim();
+  if(proxy) return proxy.replace(/\/$/,'') + '/v2';
+  return 'https://api.jquants.com/v2';
+}
 let cancelled = false;
 let results = [];
 let currentFilter = 'all';
@@ -267,6 +273,11 @@ const savedKey = localStorage.getItem('jquants_api_key');
 if (savedKey) document.getElementById('apiKey').value = savedKey;
 document.getElementById('apiKey').addEventListener('change', e=>{
   localStorage.setItem('jquants_api_key', e.target.value.trim());
+});
+const savedProxy = localStorage.getItem('jquants_proxy_url');
+if (savedProxy) document.getElementById('proxyUrl').value = savedProxy;
+document.getElementById('proxyUrl').addEventListener('change', e=>{
+  localStorage.setItem('jquants_proxy_url', e.target.value.trim());
 });
 function toggleKeyVisible(){
   const el = document.getElementById('apiKey');
@@ -321,7 +332,7 @@ function clearLog(){
 async function apiGet(path, params){
   const key = document.getElementById('apiKey').value.trim();
   if(!key) throw new Error('APIキーが未入力です');
-  let url = API_BASE + path;
+  let url = getApiBase() + path;
   const qs = new URLSearchParams(params || {});
   let collected = [];
   let guard = 0;
