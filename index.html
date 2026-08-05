@@ -330,7 +330,7 @@ function clearLog(){
   box.style.display = 'none';
 }
 
-async function apiGet(path, params){
+async function apiGetInner(path, params){
   const key = document.getElementById('apiKey').value.trim();
   if(!key) throw new Error('APIキーが未入力です');
   let url = getApiBase() + path;
@@ -339,13 +339,13 @@ async function apiGet(path, params){
   let guard = 0;
   while(true){
     guard++;
-    if(guard > 25) break;
+    if(guard > 5) break;
     const full = url + (qs.toString() ? ('?' + qs.toString()) : '');
     let resp;
     let retries = 0;
     while(true){
-      resp = await fetchWithTimeout(full, { headers: { 'x-api-key': key } }, 15000);
-      if(resp.status === 429 && retries < 4){
+      resp = await fetchWithTimeout(full, { headers: { 'x-api-key': key } }, 12000);
+      if(resp.status === 429 && retries < 2){
         retries++;
         await sleep(1500 * retries);
         continue;
@@ -367,6 +367,13 @@ async function apiGet(path, params){
     }
   }
   return collected;
+}
+
+async function apiGet(path, params){
+  const overallTimeout = new Promise((_, reject)=>{
+    setTimeout(()=>reject(new Error('全体タイムアウト(20秒)')), 20000);
+  });
+  return Promise.race([apiGetInner(path, params), overallTimeout]);
 }
 
 // ---------- date helpers ----------
@@ -527,7 +534,10 @@ async function runScreen(){
       if(cancelled) break;
       updateProgress(done, candidates.length, c.name || c.code);
       try{
-        const records = await fetchFinSummary(c.code);
+        const watchdog = new Promise((_, reject)=>{
+          setTimeout(()=>reject(new Error('銘柄処理タイムアウト(25秒)')), 25000);
+        });
+        const records = await Promise.race([fetchFinSummary(c.code), watchdog]);
         const pc = pickCurrentAndPrev(records);
         checkedCount++;
         if(pc && pc.prev){
