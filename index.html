@@ -532,7 +532,13 @@ async function runScreen(){
     let checkedCount = 0;
     for(const c of candidates){
       if(cancelled) break;
-      updateProgress(done, candidates.length, c.name || c.code);
+      let elapsed = 0;
+      const label = c.name || c.code;
+      updateProgress(done, candidates.length, label + ` (経過0秒)`);
+      const ticker = setInterval(()=>{
+        elapsed++;
+        updateProgress(done, candidates.length, label + ` (経過${elapsed}秒)`);
+      }, 1000);
       try{
         const watchdog = new Promise((_, reject)=>{
           setTimeout(()=>reject(new Error('銘柄処理タイムアウト(25秒)')), 25000);
@@ -560,6 +566,7 @@ async function runScreen(){
       }catch(e){
         logMsg(`${c.code} ${c.name||''}: 取得失敗 (${e.message})`);
       }
+      clearInterval(ticker);
       done++;
       await sleep(400);
     }
