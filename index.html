@@ -673,18 +673,15 @@ async function runScreen(){
             const prevMargin = pc.prev.np / pc.prev.sales * 100;
             marginChange = curMargin - prevMargin;
           }
-          // 自己資本比率(純資産/総資産)の変化(ポイント差)
-          let equityRatioChange = null;
-          if(pc.current.eq!=null && pc.current.ta && pc.prev.eq!=null && pc.prev.ta){
-            const curRatio = pc.current.eq / pc.current.ta * 100;
-            const prevRatio = pc.prev.eq / pc.prev.ta * 100;
-            equityRatioChange = curRatio - prevRatio;
-          }
 
           // 株価に直結しやすい指標(売上高・純利益・EPS)のみプラス必須。
-          // 経常利益・利益率変化・自己資本比率変化はマイナスでも除外せず、スコアには引き続き反映する。
+          // 経常利益・利益率変化はマイナスでも除外せず、スコアには引き続き反映する。
           const epsUp = epsYoy == null || epsYoy >= 0; // EPSが取得できない場合は除外しない
           const allClear = salesUp && profitUp && epsUp;
+
+          if(!allClear){
+            state.gateFailCount = (state.gateFailCount||0) + 1;
+          }
 
           if(allClear){
             let momentum = null, momentumDays = 0, avgVolume = null;
@@ -699,16 +696,17 @@ async function runScreen(){
             const minVolume = Number(document.getElementById('minVolume').value) || 0;
             if(avgVolume != null && avgVolume < minVolume){
               logMsg(`${c.code} ${c.name||''}: 平均出来高${Math.round(avgVolume)}株が基準(${minVolume}株)未満のため除外`);
+              state.volumeExcluded = (state.volumeExcluded||0) + 1;
             } else {
               const totalScore = salesYoy + profitYoy + (momentum||0)
                 + (odpYoy||0)*0.5 + (epsYoy||0)*0.5
-                + (marginChange||0)*2 + (equityRatioChange||0)*2;
+                + (marginChange||0)*2;
               results.push({
                 code:c.code, name:c.name, announceDate:c.announceDate, status:'up2',
                 periodLabel: (pc.current.periodEnd||'') + ' (' + (pc.current.periodType||'?') + ')',
                 sales:{cur:pc.current.sales, prev:pc.prev.sales, yoy:salesYoy},
                 profit:{cur:pc.current.np!=null?pc.current.np:pc.current.op, prev:pc.prev.np!=null?pc.prev.np:pc.prev.op, yoy:profitYoy, label: pc.current.np!=null?'純利益':'営業利益'},
-                odpYoy, epsYoy, marginChange, equityRatioChange,
+                odpYoy, epsYoy, marginChange,
                 momentum:{pct:momentum, days:momentumDays},
                 avgVolume,
                 totalScore,
@@ -716,6 +714,8 @@ async function runScreen(){
               });
             }
           }
+        } else {
+          state.noPrevCount = (state.noPrevCount||0) + 1;
         }
       }catch(e){
         logMsg(`${c.code} ${c.name||''}: 取得失敗 (${e.message})`);
@@ -724,6 +724,7 @@ async function runScreen(){
       await sleep(300);
     }
     state.finished = true;
+    logMsg(`内訳: チェック${state.checkedCount}件 / 前年データなし${state.noPrevCount||0}件 / 売上・利益・EPSのいずれかマイナス${state.gateFailCount||0}件 / 出来高不足で除外${state.volumeExcluded||0}件 / 結果${results.length}件`);
   }
 
   const globalDeadline = new Promise(resolve=>{
@@ -818,11 +819,6 @@ function renderResults(){
         <div class="m-label">利益率 変化</div>
         <div class="m-yoy ${yoyClass(r.marginChange)}">${r.marginChange!=null ? (r.marginChange>0?'+':'')+r.marginChange.toFixed(1)+'pt' : '—'}</div>
       </div>`;
-    const eqBlock = `
-      <div class="metric">
-        <div class="m-label">自己資本比率 変化</div>
-        <div class="m-yoy ${yoyClass(r.equityRatioChange)}">${r.equityRatioChange!=null ? (r.equityRatioChange>0?'+':'')+r.equityRatioChange.toFixed(1)+'pt' : '—'}</div>
-      </div>`;
     const volBlock = `
       <div class="metric">
         <div class="m-label">平均出来高(直近)</div>
@@ -839,7 +835,7 @@ function renderResults(){
         <div class="badge ${b.cls}">${b.label}</div>
       </div>
       ${r.periodLabel ? `<div class="card-code" style="margin-top:6px;">対象期: ${escapeHtml(r.periodLabel)} ・ 成績合計 ${fmtYoy(r.totalScore)}</div>` : ''}
-      <div class="metrics" style="grid-template-columns:1fr 1fr 1fr;">${salesBlock}${profitBlock}${momentumBlock}${odpBlock}${epsBlock}${marginBlock}${eqBlock}${volBlock}</div>
+      <div class="metrics" style="grid-template-columns:1fr 1fr 1fr;">${salesBlock}${profitBlock}${momentumBlock}${odpBlock}${epsBlock}${marginBlock}${volBlock}</div>
       <div class="card-foot">
         <span>#${i+1}</span>
         <button onclick="toggleRaw(${i})">詳細JSON</button>
@@ -860,7 +856,7 @@ function escapeHtml(s){
 function exportCsv(){
   if(!results.length){ alert('データがありません'); return; }
   const top = results.slice().sort((a,b)=> (b.totalScore||-9999) - (a.totalScore||-9999)).slice(0, 10);
-  const rows = [['順位','コード','社名','発表予定日','対象期','判定','売上高YoY%','利益YoY%','利益種別','経常利益YoY%','EPS_YoY%','利益率変化pt','自己資本比率変化pt','株価騰落率%','成績合計%']];
+  const rows = [['順位','コード','社名','発表予定日','対象期','判定','売上高YoY%','利益YoY%','利益種別','経常利益YoY%','EPS_YoY%','利益率変化pt','株価騰落率%','成績合計%']];
   top.forEach((r,i)=>{
     rows.push([
       i+1, r.code, r.name||'', r.announceDate||'', r.periodLabel||'',
@@ -871,7 +867,6 @@ function exportCsv(){
       r.odpYoy!=null ? r.odpYoy.toFixed(1) : '',
       r.epsYoy!=null ? r.epsYoy.toFixed(1) : '',
       r.marginChange!=null ? r.marginChange.toFixed(1) : '',
-      r.equityRatioChange!=null ? r.equityRatioChange.toFixed(1) : '',
       r.momentum && r.momentum.pct!=null ? r.momentum.pct.toFixed(1) : '',
       r.totalScore!=null ? r.totalScore.toFixed(1) : ''
     ]);
