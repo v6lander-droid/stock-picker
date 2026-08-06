@@ -681,10 +681,10 @@ async function runScreen(){
             equityRatioChange = curRatio - prevRatio;
           }
 
-          // 取得できた指標のうち、どれか一つでもマイナスなら除外
-          const metricsToCheck = [salesYoy, profitYoy, odpYoy, epsYoy, marginChange, equityRatioChange];
-          const hasNegative = metricsToCheck.some(v => v != null && v < 0);
-          const allClear = !hasNegative && salesUp && profitUp;
+          // 株価に直結しやすい指標(売上高・純利益・EPS)のみプラス必須。
+          // 経常利益・利益率変化・自己資本比率変化はマイナスでも除外せず、スコアには引き続き反映する。
+          const epsUp = epsYoy == null || epsYoy >= 0; // EPSが取得できない場合は除外しない
+          const allClear = salesUp && profitUp && epsUp;
 
           if(allClear){
             let momentum = null, momentumDays = 0, avgVolume = null;
@@ -762,7 +762,7 @@ function yoyClass(n){
   return n > 0 ? 'up' : (n < 0 ? 'down' : 'flat');
 }
 function badgeInfo(status){
-  return {cls:'up2', label:'全指標プラス'};
+  return {cls:'up2', label:'増収増益EPS増'};
 }
 
 function renderResults(){
@@ -775,11 +775,11 @@ function renderResults(){
 
   const checkedCount = window.__checkedCount || results.length;
   document.getElementById('summaryLine').textContent =
-    `チェック対象 ${checkedCount}件 / 全指標プラス ${matchedCount}件中 株価上昇の可能性が高いTOP${list.length}を表示`;
+    `チェック対象 ${checkedCount}件 / 増収増益EPS増 ${matchedCount}件中 株価上昇の可能性が高いTOP${list.length}を表示`;
 
   const cardsEl = document.getElementById('cards');
   if(!list.length){
-    cardsEl.innerHTML = '<div class="empty">全指標プラスの銘柄が見つかりませんでした</div>';
+    cardsEl.innerHTML = '<div class="empty">増収増益EPS増の銘柄が見つかりませんでした</div>';
     return;
   }
 
