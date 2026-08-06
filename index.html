@@ -218,6 +218,13 @@
   </div>
 
   <div class="panel">
+    <h2>自動取得(GitHub Actions)</h2>
+    <p class="note" style="margin-top:0;">GitHub Actionsで定期実行した結果を読み込みます。ブラウザでの手動検索は不要です。</p>
+    <button class="secondary" onclick="loadAutoResults()">自動取得結果を読み込む</button>
+    <div id="autoStatus" style="font-size:12px; color:var(--sub); font-family:var(--mono); margin-top:8px;"></div>
+  </div>
+
+  <div class="panel">
     <h2>検索条件</h2>
     <div class="row2">
       <div>
@@ -603,6 +610,26 @@ function updateProgress(done, total, label){
 }
 
 function cancelRun(){ cancelled = true; }
+
+async function loadAutoResults(){
+  const statusEl = document.getElementById('autoStatus');
+  statusEl.textContent = '読み込み中...';
+  try{
+    const resp = await fetch('./data/results.json', { cache: 'no-store' });
+    if(!resp.ok){
+      statusEl.textContent = 'まだ自動取得結果がありません(HTTP ' + resp.status + ')。GitHub Actionsが1回実行されると生成されます。';
+      return;
+    }
+    const data = await resp.json();
+    results = (data.results || []).map(r => ({ ...r, status: 'up2' }));
+    window.__checkedCount = data.checkedCount;
+    const generated = data.generatedAt ? new Date(data.generatedAt).toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' }) : '不明';
+    statusEl.textContent = `最終更新: ${generated}(JST) / チェック対象 ${data.checkedCount}件 / 条件クリア ${data.matchedCount}件`;
+    renderResults();
+  }catch(e){
+    statusEl.textContent = '読み込みに失敗しました: ' + e.message;
+  }
+}
 
 async function runScreen(){
   const key = document.getElementById('apiKey').value.trim();
