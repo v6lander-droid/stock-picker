@@ -242,7 +242,7 @@
         <input type="number" id="bulkWindowDays" value="45" min="7" max="90">
       </div>
       <div style="font-size:11px; color:var(--sub); align-self:flex-end; padding-bottom:11px;">
-        直近{窓}日 + 1年前±{窓}日の開示日をまとめて取得します
+        12週間前を起点に前後{窓}日 + 1年前±{窓}日の開示日をまとめて取得します(Freeプランは直近12週間分が取得不可のため)
       </div>
     </div>
 
@@ -500,8 +500,11 @@ function weekdayDates(fromDate, toDate){
 // 日付ベースで開示された全銘柄の財務データをまとめて取得し、コード別にプールする
 async function fetchBulkFinPool(windowDays, onProgress){
   const today = new Date();
-  const currentFrom = new Date(today.getTime() - windowDays*86400000);
-  const currentDates = weekdayDates(currentFrom, today);
+  // Freeプランは直近12週間程度のデータが取得不可なため、90日前を起点にする
+  const EMBARGO_DAYS = 90;
+  const currentAnchor = new Date(today.getTime() - EMBARGO_DAYS*86400000);
+  const currentFrom = new Date(currentAnchor.getTime() - windowDays*86400000);
+  const currentDates = weekdayDates(currentFrom, currentAnchor);
 
   const priorAnchor = new Date(today.getTime() - 365*86400000);
   const priorFrom = new Date(priorAnchor.getTime() - windowDays*86400000);
