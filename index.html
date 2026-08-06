@@ -229,6 +229,23 @@
         <input type="number" id="maxCount" value="500" min="1" max="500">
       </div>
     </div>
+    <label>最低平均出来高(株/日・流動性フィルター)</label>
+    <input type="number" id="minVolume" value="10000" min="0" step="1000">
+
+    <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+      <input type="checkbox" id="bulkMode" style="width:18px; height:18px; margin:0;">
+      <span>日付ベースで一括取得する(候補が多い時におすすめ)</span>
+    </label>
+    <div class="row2" id="bulkWindowRow" style="display:none; margin-top:10px;">
+      <div>
+        <label>検索窓(日数・前後)</label>
+        <input type="number" id="bulkWindowDays" value="45" min="7" max="90">
+      </div>
+      <div style="font-size:11px; color:var(--sub); align-self:flex-end; padding-bottom:11px;">
+        直近{窓}日 + 1年前±{窓}日の開示日をまとめて取得します
+      </div>
+    </div>
+
     <label>直接コード指定(任意・カンマ区切り, 例: 7203,6758)</label>
     <input type="text" id="manualCodes" placeholder="空欄なら決算発表予定日から自動取得">
     <button class="primary" id="runBtn" onclick="runScreen()">検索開始</button>
@@ -277,6 +294,9 @@ function toggleKeyVisible(){
   const el = document.getElementById('apiKey');
   el.type = el.type === 'password' ? 'text' : 'password';
 }
+document.getElementById('bulkMode').addEventListener('change', e=>{
+  document.getElementById('bulkWindowRow').style.display = e.target.checked ? 'grid' : 'none';
+});
 
 // ---------- helpers ----------
 function sleep(ms){ return new Promise(r=>setTimeout(r, ms)); }
@@ -436,23 +456,79 @@ async function fetchEarningsCandidates(daysAhead){
 }
 
 // ---------- step 2: financial summary ----------
+function normalizeFinRecord(r){
+  return {
+    code: String(pickField(r, ['Code','LocalCode']) || ''),
+    periodType: pickField(r, ['CurPerType','TypeOfCurrentPeriod','PeriodType']),
+    periodEnd: pickField(r, ['CurPerEn','CurrentPeriodEndDate','PeriodEnd']),
+    discDate: pickField(r, ['DiscDate','DisclosedDate']),
+    sales: numOrNull(pickField(r, ['Sales','NetSales'])),
+    op: numOrNull(pickField(r, ['OP','OperatingProfit'])),
+    odp: numOrNull(pickField(r, ['OdP','OrdinaryProfit'])),
+    np: numOrNull(pickField(r, ['NP','Profit','NetIncome'])),
+    eps: numOrNull(pickField(r, ['EPS','EarningsPerShare'])),
+    ta: numOrNull(pickField(r, ['TA','TotalAssets'])),
+    eq: numOrNull(pickField(r, ['Eq','Equity','NetAssets'])),
+    raw: r
+  };
+}
+
 async function fetchFinSummary(code){
   const raw = await apiGet('/fins/summary', { code: code });
-  return raw.map(r=>{
-    return {
-      periodType: pickField(r, ['CurPerType','TypeOfCurrentPeriod','PeriodType']),
-      periodEnd: pickField(r, ['CurPerEn','CurrentPeriodEndDate','PeriodEnd']),
-      discDate: pickField(r, ['DiscDate','DisclosedDate']),
-      sales: numOrNull(pickField(r, ['Sales','NetSales'])),
-      op: numOrNull(pickField(r, ['OP','OperatingProfit'])),
-      odp: numOrNull(pickField(r, ['OdP','OrdinaryProfit'])),
-      np: numOrNull(pickField(r, ['NP','Profit','NetIncome'])),
-      eps: numOrNull(pickField(r, ['EPS','EarningsPerShare'])),
-      ta: numOrNull(pickField(r, ['TA','TotalAssets'])),
-      eq: numOrNull(pickField(r, ['Eq','Equity','NetAssets'])),
-      raw: r
-    };
-  }).filter(x=>x.periodEnd);
+  return raw.map(normalizeFinRecord).filter(x=>x.periodEnd);
+}
+
+function fmtDateOnly(d){
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const day = String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${day}`;
+}
+
+// 指定範囲内の平日(土日を除く)の日付文字列リストを作る
+function weekdayDates(fromDate, toDate){
+  const list = [];
+  const cur = new Date(fromDate);
+  while(cur <= toDate){
+    const dow = cur.getDay();
+    if(dow !== 0 && dow !== 6) list.push(fmtDateOnly(cur));
+    cur.setDate(cur.getDate() + 1);
+  }
+  return list;
+}
+
+// 日付ベースで開示された全銘柄の財務データをまとめて取得し、コード別にプールする
+async function fetchBulkFinPool(windowDays, onProgress){
+  const today = new Date();
+  const currentFrom = new Date(today.getTime() - windowDays*86400000);
+  const currentDates = weekdayDates(currentFrom, today);
+
+  const priorAnchor = new Date(today.getTime() - 365*86400000);
+  const priorFrom = new Date(priorAnchor.getTime() - windowDays*86400000);
+  const priorTo = new Date(priorAnchor.getTime() + windowDays*86400000);
+  const priorDates = weekdayDates(priorFrom, priorTo);
+
+  const allDates = Array.from(new Set([...currentDates, ...priorDates])).sort();
+
+  const pool = new Map();
+  let done = 0;
+  for(const dateStr of allDates){
+    if(onProgress) onProgress(done, allDates.length, dateStr);
+    try{
+      const raw = await apiGet('/fins/summary', { date: dateStr });
+      for(const r of raw){
+        const rec = normalizeFinRecord(r);
+        if(!rec.code || !rec.periodEnd) continue;
+        if(!pool.has(rec.code)) pool.set(rec.code, []);
+        pool.get(rec.code).push(rec);
+      }
+    }catch(e){
+      logMsg(`日付${dateStr}の一括取得に失敗: ${e.message}`);
+    }
+    done++;
+  }
+  if(onProgress) onProgress(done, allDates.length, '完了');
+  return pool;
 }
 
 // Freeプランは直近1週間分の株価四本値のみ取得可能。その範囲内の騰落率を「モメンタム」として使う。
@@ -461,14 +537,17 @@ async function fetchPriceMomentum(code){
   const bars = raw.map(r=>{
     return {
       date: pickField(r, ['Date']),
-      close: numOrNull(pickField(r, ['AdjC','C','Close']))
+      close: numOrNull(pickField(r, ['AdjC','C','Close'])),
+      volume: numOrNull(pickField(r, ['Vo','Volume']))
     };
   }).filter(x=>x.date && x.close != null)
     .sort((a,b)=> new Date(a.date) - new Date(b.date));
-  if(bars.length < 2) return { pct: null, days: bars.length, raw: bars };
+  if(bars.length < 2) return { pct: null, days: bars.length, avgVolume: null, raw: bars };
   const first = bars[0], last = bars[bars.length-1];
   const pct = yoy(last.close, first.close);
-  return { pct, days: bars.length, first, last, raw: bars };
+  const volValues = bars.map(b=>b.volume).filter(v=>v!=null);
+  const avgVolume = volValues.length ? (volValues.reduce((a,b)=>a+b,0) / volValues.length) : null;
+  return { pct, days: bars.length, avgVolume, first, last, raw: bars };
 }
 
 function numOrNull(v){
@@ -554,12 +633,24 @@ async function runScreen(){
     candidates = candidates.slice(0, maxCount);
     state.total = candidates.length;
 
+    const bulkMode = document.getElementById('bulkMode').checked;
+    let bulkPool = null;
+    if(bulkMode){
+      const windowDays = Number(document.getElementById('bulkWindowDays').value) || 45;
+      bulkPool = await fetchBulkFinPool(windowDays, (done, total, label)=>{
+        updateProgress(0, candidates.length, `一括取得中(日付ベース) ${label} ${done}/${total}`);
+      });
+      logMsg(`日付ベース一括取得完了: ${bulkPool.size}銘柄分のデータをプール`);
+    }
+
     for(const c of candidates){
       if(cancelled) break;
       const label = c.name || c.code;
       updateProgress(state.done, candidates.length, label);
       try{
-        const records = await fetchFinSummary(c.code);
+        const records = bulkMode
+          ? (bulkPool.get(String(c.code)) || [])
+          : await fetchFinSummary(c.code);
         const pc = pickCurrentAndPrev(records);
         state.checkedCount++;
         if(pc && pc.prev){
@@ -593,27 +684,34 @@ async function runScreen(){
           const allClear = !hasNegative && salesUp && profitUp;
 
           if(allClear){
-            let momentum = null, momentumDays = 0;
+            let momentum = null, momentumDays = 0, avgVolume = null;
             try{
               const pm = await fetchPriceMomentum(c.code);
               momentum = pm.pct;
               momentumDays = pm.days;
+              avgVolume = pm.avgVolume;
             }catch(e){
               logMsg(`${c.code} ${c.name||''}: 株価データ取得失敗 (${e.message})`);
             }
-            const totalScore = salesYoy + profitYoy + (momentum||0)
-              + (odpYoy||0)*0.5 + (epsYoy||0)*0.5
-              + (marginChange||0)*2 + (equityRatioChange||0)*2;
-            results.push({
-              code:c.code, name:c.name, announceDate:c.announceDate, status:'up2',
-              periodLabel: (pc.current.periodEnd||'') + ' (' + (pc.current.periodType||'?') + ')',
-              sales:{cur:pc.current.sales, prev:pc.prev.sales, yoy:salesYoy},
-              profit:{cur:pc.current.np!=null?pc.current.np:pc.current.op, prev:pc.prev.np!=null?pc.prev.np:pc.prev.op, yoy:profitYoy, label: pc.current.np!=null?'純利益':'営業利益'},
-              odpYoy, epsYoy, marginChange, equityRatioChange,
-              momentum:{pct:momentum, days:momentumDays},
-              totalScore,
-              raw:{current:pc.current.raw, prev:pc.prev.raw}
-            });
+            const minVolume = Number(document.getElementById('minVolume').value) || 0;
+            if(avgVolume != null && avgVolume < minVolume){
+              logMsg(`${c.code} ${c.name||''}: 平均出来高${Math.round(avgVolume)}株が基準(${minVolume}株)未満のため除外`);
+            } else {
+              const totalScore = salesYoy + profitYoy + (momentum||0)
+                + (odpYoy||0)*0.5 + (epsYoy||0)*0.5
+                + (marginChange||0)*2 + (equityRatioChange||0)*2;
+              results.push({
+                code:c.code, name:c.name, announceDate:c.announceDate, status:'up2',
+                periodLabel: (pc.current.periodEnd||'') + ' (' + (pc.current.periodType||'?') + ')',
+                sales:{cur:pc.current.sales, prev:pc.prev.sales, yoy:salesYoy},
+                profit:{cur:pc.current.np!=null?pc.current.np:pc.current.op, prev:pc.prev.np!=null?pc.prev.np:pc.prev.op, yoy:profitYoy, label: pc.current.np!=null?'純利益':'営業利益'},
+                odpYoy, epsYoy, marginChange, equityRatioChange,
+                momentum:{pct:momentum, days:momentumDays},
+                avgVolume,
+                totalScore,
+                raw:{current:pc.current.raw, prev:pc.prev.raw}
+              });
+            }
           }
         }
       }catch(e){
@@ -722,6 +820,11 @@ function renderResults(){
         <div class="m-label">自己資本比率 変化</div>
         <div class="m-yoy ${yoyClass(r.equityRatioChange)}">${r.equityRatioChange!=null ? (r.equityRatioChange>0?'+':'')+r.equityRatioChange.toFixed(1)+'pt' : '—'}</div>
       </div>`;
+    const volBlock = `
+      <div class="metric">
+        <div class="m-label">平均出来高(直近)</div>
+        <div class="m-yoy flat">${r.avgVolume!=null ? Math.round(r.avgVolume).toLocaleString()+'株' : '—'}</div>
+      </div>`;
 
     return `
     <div class="card">
@@ -733,7 +836,7 @@ function renderResults(){
         <div class="badge ${b.cls}">${b.label}</div>
       </div>
       ${r.periodLabel ? `<div class="card-code" style="margin-top:6px;">対象期: ${escapeHtml(r.periodLabel)} ・ 成績合計 ${fmtYoy(r.totalScore)}</div>` : ''}
-      <div class="metrics" style="grid-template-columns:1fr 1fr 1fr;">${salesBlock}${profitBlock}${momentumBlock}${odpBlock}${epsBlock}${marginBlock}${eqBlock}</div>
+      <div class="metrics" style="grid-template-columns:1fr 1fr 1fr;">${salesBlock}${profitBlock}${momentumBlock}${odpBlock}${epsBlock}${marginBlock}${eqBlock}${volBlock}</div>
       <div class="card-foot">
         <span>#${i+1}</span>
         <button onclick="toggleRaw(${i})">詳細JSON</button>
