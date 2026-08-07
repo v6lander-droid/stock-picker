@@ -2,7 +2,7 @@ name: Scheduled Screen
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '*/15 * * * *'
   workflow_dispatch: {}
 
 permissions:
@@ -12,6 +12,7 @@ permissions:
 jobs:
   check-and-run:
     runs-on: ubuntu-latest
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
 
@@ -54,7 +55,7 @@ jobs:
           TARGET_MIN=$((10#${TARGET%%:*} * 60 + 10#${TARGET##*:}))
           DIFF=$((NOW_MIN - TARGET_MIN))
 
-          if [ $DIFF -ge 0 ] && [ $DIFF -lt 10 ]; then
+          if [ $DIFF -ge 0 ] && [ $DIFF -lt 20 ]; then
             echo "実行時刻です (現在 $NOW / 設定 $TARGET)"
             echo "skip=false" >> "$GITHUB_OUTPUT"
           else
