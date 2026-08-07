@@ -711,12 +711,13 @@ async function runScreen(){
           }
 
           if(allClear){
-            let momentum = null, momentumDays = 0, avgVolume = null;
+            let momentum = null, momentumDays = 0, avgVolume = null, currentPrice = null;
             try{
               const pm = await fetchPriceMomentum(c.code);
               momentum = pm.pct;
               momentumDays = pm.days;
               avgVolume = pm.avgVolume;
+              currentPrice = pm.last ? pm.last.close : null;
             }catch(e){
               logMsg(`${c.code} ${c.name||''}: 株価データ取得失敗 (${e.message})`);
             }
@@ -735,7 +736,7 @@ async function runScreen(){
                 profit:{cur:pc.current.np!=null?pc.current.np:pc.current.op, prev:pc.prev.np!=null?pc.prev.np:pc.prev.op, yoy:profitYoy, label: pc.current.np!=null?'純利益':'営業利益'},
                 odpYoy, epsYoy, marginChange,
                 momentum:{pct:momentum, days:momentumDays},
-                avgVolume,
+                avgVolume, currentPrice,
                 totalScore,
                 raw:{current:pc.current.raw, prev:pc.prev.raw}
               });
@@ -856,7 +857,7 @@ function renderResults(){
     <div class="card">
       <div class="card-top">
         <div>
-          <div class="card-name">${escapeHtml(r.name||'(社名不明)')}</div>
+          <div class="card-name">${escapeHtml(r.name||'(社名不明)')}${r.currentPrice!=null ? ` <span style="font-family:var(--mono); font-size:15px; color:var(--accent); font-weight:700;">${r.currentPrice.toLocaleString()}円</span>` : ''}</div>
           <div class="card-code">${escapeHtml(r.code)}${r.announceDate ? ' ・ 発表予定 ' + escapeHtml(String(r.announceDate)) : ''}</div>
         </div>
         <div class="badge ${b.cls}">${b.label}</div>
@@ -883,11 +884,12 @@ function escapeHtml(s){
 function exportCsv(){
   if(!results.length){ alert('データがありません'); return; }
   const top = results.slice().sort((a,b)=> (b.totalScore||-9999) - (a.totalScore||-9999)).slice(0, 10);
-  const rows = [['順位','コード','社名','発表予定日','対象期','判定','売上高YoY%','利益YoY%','利益種別','経常利益YoY%','EPS_YoY%','利益率変化pt','株価騰落率%','成績合計%']];
+  const rows = [['順位','コード','社名','発表予定日','対象期','判定','株価(円)','売上高YoY%','利益YoY%','利益種別','経常利益YoY%','EPS_YoY%','利益率変化pt','株価騰落率%','成績合計%']];
   top.forEach((r,i)=>{
     rows.push([
       i+1, r.code, r.name||'', r.announceDate||'', r.periodLabel||'',
       badgeInfo(r.status).label,
+      r.currentPrice!=null ? r.currentPrice : '',
       r.sales && r.sales.yoy!=null ? r.sales.yoy.toFixed(1) : '',
       r.profit && r.profit.yoy!=null ? r.profit.yoy.toFixed(1) : '',
       r.profit ? (r.profit.label||'') : '',
