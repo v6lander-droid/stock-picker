@@ -239,12 +239,12 @@ async function fetchPriceMomentum(code) {
     };
   }).filter(x => x.date && x.close != null)
     .sort((a, b) => new Date(a.date) - new Date(b.date));
-  if (bars.length < 2) return { pct: null, days: bars.length, avgVolume: null };
+  if (bars.length < 2) return { pct: null, days: bars.length, avgVolume: null, currentPrice: bars.length ? bars[bars.length-1].close : null };
   const first = bars[0], last = bars[bars.length - 1];
   const pct = yoy(last.close, first.close);
   const volValues = bars.map(b => b.volume).filter(v => v != null);
   const avgVolume = volValues.length ? (volValues.reduce((a, b) => a + b, 0) / volValues.length) : null;
-  return { pct, days: bars.length, avgVolume };
+  return { pct, days: bars.length, avgVolume, currentPrice: last.close };
 }
 
 function pickCurrentAndPrev(records) {
@@ -324,12 +324,13 @@ async function main() {
         if (!allClear) {
           gateFailCount++;
         } else {
-          let momentum = null, momentumDays = 0, avgVolume = null;
+          let momentum = null, momentumDays = 0, avgVolume = null, currentPrice = null;
           try {
             const pm = await fetchPriceMomentum(c.code);
             momentum = pm.pct;
             momentumDays = pm.days;
             avgVolume = pm.avgVolume;
+            currentPrice = pm.currentPrice;
           } catch (e) {
             logMsg(`${c.code} ${c.name || ''}: 株価データ取得失敗 (${e.message})`);
           }
@@ -347,7 +348,7 @@ async function main() {
               profit: { cur: pc.current.np != null ? pc.current.np : pc.current.op, prev: pc.prev.np != null ? pc.prev.np : pc.prev.op, yoy: profitYoy, label: pc.current.np != null ? '純利益' : '営業利益' },
               odpYoy, epsYoy, marginChange,
               momentum: { pct: momentum, days: momentumDays },
-              avgVolume,
+              avgVolume, currentPrice,
               totalScore
             });
           }
@@ -383,10 +384,11 @@ async function main() {
   body += `実行日時: ${new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })}\n\n`;
   body += `チェック対象 ${checkedCount}件 / 条件クリア ${results.length}件中 TOP${top10.length}\n\n`;
   if (top10.length) {
-    body += `| # | 銘柄 | コード | 売上高YoY | 利益YoY | EPS YoY | 株価騰落率 | 成績合計 |\n`;
-    body += `|---|---|---|---|---|---|---|---|\n`;
+    body += `| # | 銘柄 | コード | 株価 | 売上高YoY | 利益YoY | EPS YoY | 株価騰落率 | 成績合計 |\n`;
+    body += `|---|---|---|---|---|---|---|---|---|\n`;
     top10.forEach((r, i) => {
-      body += `| ${i + 1} | ${r.name || ''} | ${r.code} | ${fmtYoyStr(r.sales.yoy)} | ${fmtYoyStr(r.profit.yoy)} | ${fmtYoyStr(r.epsYoy)} | ${fmtYoyStr(r.momentum.pct)} | ${fmtYoyStr(r.totalScore)} |\n`;
+      const priceStr = r.currentPrice != null ? r.currentPrice.toLocaleString() + '円' : '—';
+      body += `| ${i + 1} | ${r.name || ''} | ${r.code} | ${priceStr} | ${fmtYoyStr(r.sales.yoy)} | ${fmtYoyStr(r.profit.yoy)} | ${fmtYoyStr(r.epsYoy)} | ${fmtYoyStr(r.momentum.pct)} | ${fmtYoyStr(r.totalScore)} |\n`;
     });
   } else {
     body += `条件を満たす銘柄はありませんでした。\n`;
