@@ -1,42 +1,120 @@
 {
-  "generatedAt": "2026-08-07T02:05:54.614Z",
+  "generatedAt": "2026-08-07T02:53:07.895Z",
   "config": {
     "daysAhead": 3,
     "maxCount": 500,
     "minVolume": 10000,
-    "bulkWindowDays": 45
+    "bulkWindowDays": 75
   },
   "checkedCount": 500,
-  "noPrevCount": 495,
-  "gateFailCount": 4,
+  "noPrevCount": 487,
+  "gateFailCount": 9,
   "volumeExcluded": 0,
-  "matchedCount": 1,
+  "matchedCount": 4,
   "results": [
+    {
+      "code": "39170",
+      "name": "アイリッジ",
+      "announceDate": "2026-08-07",
+      "periodLabel": "2026-03-31 (FY)",
+      "sales": {
+        "cur": 7200000000,
+        "prev": 6708000000,
+        "yoy": 7.334525939177102
+      },
+      "profit": {
+        "cur": 800000000,
+        "prev": 13000000,
+        "yoy": 6053.846153846154,
+        "label": "純利益"
+      },
+      "odpYoy": 25,
+      "epsYoy": 5507.103825136612,
+      "marginChange": 10.917312661498707,
+      "momentum": {
+        "pct": -6.25,
+        "days": 488
+      },
+      "avgVolume": 40851.84426229508,
+      "totalScore": 8842.817217676635
+    },
+    {
+      "code": "17680",
+      "name": "ソネック",
+      "announceDate": "2026-08-07",
+      "periodLabel": "2026-03-31 (FY)",
+      "sales": {
+        "cur": 22753000000,
+        "prev": 15196000000,
+        "yoy": 49.73019215583048
+      },
+      "profit": {
+        "cur": 1366000000,
+        "prev": 500000000,
+        "yoy": 173.2,
+        "label": "純利益"
+      },
+      "odpYoy": 169.4708276797829,
+      "epsYoy": 172.92882147024505,
+      "marginChange": 2.713264357319244,
+      "momentum": {
+        "pct": 10.836909871244634,
+        "days": 488
+      },
+      "avgVolume": 10111.88524590164,
+      "totalScore": 410.39345531672757
+    },
+    {
+      "code": "46940",
+      "name": "ビー・エム・エル",
+      "announceDate": "2026-08-07",
+      "periodLabel": "2025-12-31 (3Q)",
+      "sales": {
+        "cur": 114475000000,
+        "prev": 108579000000,
+        "yoy": 5.4301476344412825
+      },
+      "profit": {
+        "cur": 6557000000,
+        "prev": 5260000000,
+        "yoy": 24.657794676806084,
+        "label": "純利益"
+      },
+      "odpYoy": 14.021790620558978,
+      "epsYoy": 27.099547846712625,
+      "marginChange": 0.8834891761767967,
+      "momentum": {
+        "pct": 22.438346648141717,
+        "days": 488
+      },
+      "avgVolume": 67417.62295081967,
+      "totalScore": 74.85393654537847
+    },
     {
       "code": "99080",
       "name": "日本電計",
       "announceDate": "2026-08-07",
-      "periodLabel": "2025-12-31 (3Q)",
+      "periodLabel": "2026-03-31 (FY)",
       "sales": {
-        "cur": 86779000000,
-        "prev": 76772000000,
-        "yoy": 13.034700151096754
+        "cur": 130000000000,
+        "prev": 121235000000,
+        "yoy": 7.2297603827277594
       },
       "profit": {
-        "cur": 2088000000,
-        "prev": 1761000000,
-        "yoy": 18.56899488926746,
+        "cur": 3400000000,
+        "prev": 2973000000,
+        "yoy": 14.36259670366633,
         "label": "純利益"
       },
-      "odpYoy": 12.0264803236484,
-      "epsYoy": 19.60758919898983,
-      "marginChange": 0.11230704472186348,
+      "odpYoy": 5.6189269117025775,
+      "epsYoy": 15.261059572184314,
+      "marginChange": 0.16312247986269535,
       "momentum": {
         "pct": 21.290944123314066,
         "days": 488
       },
       "avgVolume": 11501.434426229509,
-      "totalScore": 68.93628801444113
+      "totalScore": 53.649539411376985
     }
   ]
 }
