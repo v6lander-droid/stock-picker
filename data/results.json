@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-08T21:24:52.166Z",
+  "generatedAt": "2026-08-09T21:14:51.508Z",
   "config": {
     "daysAhead": 3,
     "maxCount": 500,
@@ -7,8 +7,8 @@
     "bulkWindowDays": 75
   },
   "checkedCount": 186,
-  "noPrevCount": 182,
-  "gateFailCount": 4,
+  "noPrevCount": 180,
+  "gateFailCount": 6,
   "volumeExcluded": 0,
   "matchedCount": 0,
   "results": []
