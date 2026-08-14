@@ -20,6 +20,7 @@ jobs:
         id: gate
         run: |
           ENABLED="${{ vars.SCREEN_ENABLED }}"
+          ENABLED_NORM=$(echo "$ENABLED" | tr -d '[:space:]' | tr '[:lower:]' '[:upper:]')
           TARGET="${{ vars.SCREEN_TIME }}"
           MANUAL="${{ github.event_name }}"
 
@@ -29,8 +30,8 @@ jobs:
             exit 0
           fi
 
-          if [ "$ENABLED" != "ON" ]; then
-            echo "SCREEN_ENABLED が ON ではないためスキップします (現在値: $ENABLED)"
+          if [ "$ENABLED_NORM" != "ON" ]; then
+            echo "SCREEN_ENABLED が ON ではないためスキップします (現在値: '$ENABLED')"
             echo "skip=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
@@ -45,7 +46,7 @@ jobs:
             LAST_RUN=$(cat data/last-run.txt)
           fi
           if [ "$LAST_RUN" = "$TODAY" ]; then
-            echo "本日は実行済みのためスキップします"
+            echo "本日は実行済みのためスキップします (last-run.txt: $LAST_RUN)"
             echo "skip=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
@@ -55,10 +56,13 @@ jobs:
           TARGET_MIN=$((10#${TARGET%%:*} * 60 + 10#${TARGET##*:}))
           DIFF=$((NOW_MIN - TARGET_MIN))
 
-          if [ $DIFF -ge 0 ] && [ $DIFF -lt 20 ]; then
+          echo "判定情報: NOW=$NOW TARGET=$TARGET DIFF=${DIFF}分 LAST_RUN=$LAST_RUN TODAY=$TODAY"
+
+          if [ $DIFF -ge 0 ] && [ $DIFF -lt 90 ]; then
             echo "実行時刻です (現在 $NOW / 設定 $TARGET)"
             echo "skip=false" >> "$GITHUB_OUTPUT"
           else
+            echo "時刻ウィンドウ外のためスキップします (現在 $NOW / 設定 $TARGET / 差分 ${DIFF}分)"
             echo "skip=true" >> "$GITHUB_OUTPUT"
           fi
 
