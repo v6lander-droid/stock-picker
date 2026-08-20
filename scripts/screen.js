@@ -1,6 +1,13 @@
 // 決算ピックアップ 自動実行スクリプト(GitHub Actions用)
 // ブラウザ版(index.html)と同じロジックをNode.js向けに移植したもの。
 // サーバー側実行のためCORSの制約がなく、Cloudflare Workerプロキシは不要。
+//
+// [変更点] J-Quantsの決算発表予定日データ(/equities/earnings-calendar)は
+// 実質「翌営業日分のみ」しか返らない(JPX公式の同一データソースの制約)ため、
+// DAYS_AHEADを設定しても数日先までの候補が一度に取れない。
+// そこで実行のたびに取得した「翌営業日分」の候補を data/earnings-history.json
+// に蓄積し、直近DAYS_AHEAD日以内の announceDate を持つものだけをマージして
+// 候補リストとして使う「積み上げ方式」に変更した。
 
 const fs = require('fs');
 const path = require('path');
@@ -11,6 +18,9 @@ const MAX_COUNT = Number(process.env.MAX_COUNT) || 500;
 const MIN_VOLUME = Number(process.env.MIN_VOLUME) || 10000;
 const BULK_WINDOW_DAYS = Number(process.env.BULK_WINDOW_DAYS) || 45;
 const API_BASE = 'https://api.jquants.com/v2';
+
+// 蓄積データの保持期間の余裕(営業日スキップや連休を考慮したバッファ)
+const HISTORY_RETENTION_BUFFER_DAYS = 7;
 
 if (!API_KEY) {
   console.error('JQUANTS_API_KEY が設定されていません');
@@ -134,7 +144,63 @@ function weekdayDates(fromDate, toDate) {
   return list;
 }
 
-// ---------- earnings calendar ----------
+// ---------- earnings calendar (積み上げ方式) ----------
+const HISTORY_PATH = path.join(__dirname, '..', 'data', 'earnings-history.json');
+
+function loadEarningsHistory() {
+  try {
+    const raw = fs.readFileSync(HISTORY_PATH, 'utf8');
+    const json = JSON.parse(raw);
+    if (Array.isArray(json)) return json;
+  } catch (e) {
+    // ファイルがない/壊れている場合は空から開始
+  }
+  return [];
+}
+
+function saveEarningsHistory(list) {
+  const dataDir = path.join(__dirname, '..', 'data');
+  fs.mkdirSync(dataDir, { recursive: true });
+  fs.writeFileSync(HISTORY_PATH, JSON.stringify(list, null, 2));
+}
+
+// 今回取得した「翌営業日分」候補を履歴にマージし、
+// announceDateが「今日〜今日+DAYS_AHEAD日」以内のものだけを候補として返す。
+// 履歴自体は取りこぼし対策のバッファを加えた期間だけ保持し、それ以外は破棄する。
+function mergeAndPruneHistory(existingHistory, newItems) {
+  const today = new Date(new Date().toDateString());
+  const windowTo = new Date(today.getTime() + DAYS_AHEAD * 86400000);
+  const retentionTo = new Date(today.getTime() + (DAYS_AHEAD + HISTORY_RETENTION_BUFFER_DAYS) * 86400000);
+
+  const map = new Map();
+  for (const item of existingHistory) {
+    if (item && item.code) map.set(String(item.code), item);
+  }
+  for (const item of newItems) {
+    if (item && item.code) map.set(String(item.code), item);
+  }
+
+  const kept = [];
+  const candidates = [];
+  for (const item of map.values()) {
+    const d = parseAnyDate(item.announceDate);
+    if (d) {
+      // 発表日が過ぎたものは履歴から除外(発表済みのため「予定」ではなくなった)
+      if (d < today) continue;
+      // 保持期間を大きく超えるものは異常値とみなし除外
+      if (d > retentionTo) continue;
+      kept.push(item);
+      if (d <= windowTo) candidates.push(item);
+    } else {
+      // 発表日が読み取れないものは念のため候補には含めるが、履歴には長期間残さない
+      kept.push(item);
+      candidates.push(item);
+    }
+  }
+
+  return { historyToSave: kept, candidates };
+}
+
 async function fetchEarningsCandidates(daysAhead) {
   const today = new Date();
   const to = new Date(today.getTime() + daysAhead * 86400000);
@@ -161,14 +227,11 @@ async function fetchEarningsCandidates(daysAhead) {
     return { code: code ? String(code) : null, name: name || '(社名不明)', announceDate: dateVal, raw: r };
   }).filter(x => x.code);
 
-  const filtered = list.filter(x => {
-    const d = parseAnyDate(x.announceDate);
-    if (!d) return true;
-    return d >= new Date(today.toDateString()) && d <= to;
-  });
+  // raw保持はサイズが大きくなるため履歴には積まない(必要な項目だけ残す)
+  const slim = list.map(x => ({ code: x.code, name: x.name, announceDate: x.announceDate }));
 
   const map = new Map();
-  for (const item of (filtered.length ? filtered : list)) {
+  for (const item of slim) {
     if (!map.has(item.code)) map.set(item.code, item);
   }
   return Array.from(map.values());
@@ -284,7 +347,17 @@ async function main() {
   logMsg(`=== 決算ピックアップ 自動実行開始 ${new Date().toISOString()} ===`);
   logMsg(`設定: DAYS_AHEAD=${DAYS_AHEAD}, MAX_COUNT=${MAX_COUNT}, MIN_VOLUME=${MIN_VOLUME}, BULK_WINDOW_DAYS=${BULK_WINDOW_DAYS}`);
 
-  let candidates = await fetchEarningsCandidates(DAYS_AHEAD);
+  // J-Quantsの決算発表予定日データは実質「翌営業日分のみ」しか返らないため、
+  // 今回取得分を履歴に積み上げ、直近DAYS_AHEAD日以内のものをマージして候補にする
+  const newlyFetched = await fetchEarningsCandidates(DAYS_AHEAD);
+  logMsg(`今回の取得: ${newlyFetched.length}件(翌営業日分が中心)`);
+
+  const existingHistory = loadEarningsHistory();
+  const { historyToSave, candidates: mergedCandidates } = mergeAndPruneHistory(existingHistory, newlyFetched);
+  saveEarningsHistory(historyToSave);
+  logMsg(`履歴保持件数: ${historyToSave.length}件 / 直近${DAYS_AHEAD}日以内の候補: ${mergedCandidates.length}件`);
+
+  let candidates = mergedCandidates;
   if (!candidates.length) {
     logMsg('決算発表予定の銘柄が見つかりませんでした。');
   }
