@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-10-18T22:05:29.280Z",
+  "generatedAt": "2026-10-20T21:29:05.172Z",
   "config": {
     "daysAhead": 3,
     "maxCount": 500,
     "minVolume": 10000,
     "bulkWindowDays": 75
   },
-  "checkedCount": 0,
-  "noPrevCount": 0,
+  "checkedCount": 3,
+  "noPrevCount": 3,
   "gateFailCount": 0,
   "volumeExcluded": 0,
   "matchedCount": 0,
