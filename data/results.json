@@ -1,43 +1,15 @@
 {
-  "generatedAt": "2026-10-26T22:19:50.071Z",
+  "generatedAt": "2026-10-27T21:40:04.099Z",
   "config": {
     "daysAhead": 3,
     "maxCount": 500,
     "minVolume": 10000,
     "bulkWindowDays": 75
   },
-  "checkedCount": 28,
-  "noPrevCount": 27,
+  "checkedCount": 67,
+  "noPrevCount": 67,
   "gateFailCount": 0,
   "volumeExcluded": 0,
-  "matchedCount": 1,
-  "results": [
-    {
-      "code": "36350",
-      "name": "コーエーテクモホールディングス",
-      "announceDate": "2026-10-26",
-      "periodLabel": "2026-06-30 (1Q)",
-      "sales": {
-        "cur": 17368000000,
-        "prev": 14800000000,
-        "yoy": 17.35135135135135
-      },
-      "profit": {
-        "cur": 11348000000,
-        "prev": 6072000000,
-        "yoy": 86.89064558629777,
-        "label": "純利益"
-      },
-      "odpYoy": 79.25647166153496,
-      "epsYoy": 76.65106604264169,
-      "marginChange": 24.311526634879932,
-      "momentum": {
-        "pct": 23.110407597942224,
-        "days": 487
-      },
-      "avgVolume": 1108410.2669404517,
-      "currentPrice": 1555.5,
-      "totalScore": 253.92922665743953
-    }
-  ]
+  "matchedCount": 0,
+  "results": []
 }
