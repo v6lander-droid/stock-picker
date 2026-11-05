@@ -1,15 +1,151 @@
 {
-  "generatedAt": "2026-11-01T21:45:17.093Z",
+  "generatedAt": "2026-11-05T22:10:19.415Z",
   "config": {
     "daysAhead": 3,
     "maxCount": 500,
     "minVolume": 10000,
     "bulkWindowDays": 75
   },
-  "checkedCount": 36,
-  "noPrevCount": 34,
-  "gateFailCount": 2,
+  "checkedCount": 215,
+  "noPrevCount": 206,
+  "gateFailCount": 4,
   "volumeExcluded": 0,
-  "matchedCount": 0,
-  "results": []
+  "matchedCount": 5,
+  "results": [
+    {
+      "code": "58200",
+      "name": "三ッ星",
+      "announceDate": "2026-11-06",
+      "periodLabel": "2026-06-30 (1Q)",
+      "sales": {
+        "cur": 3543000000,
+        "prev": 2714000000,
+        "yoy": 30.545320560058954
+      },
+      "profit": {
+        "cur": 131000000,
+        "prev": 19000000,
+        "yoy": 589.4736842105262,
+        "label": "純利益"
+      },
+      "odpYoy": 795.8333333333333,
+      "epsYoy": 473.71225577264653,
+      "marginChange": 2.997357863211651,
+      "momentum": {
+        "pct": -18.383838383838384,
+        "days": 488
+      },
+      "avgVolume": 25614.754098360656,
+      "currentPrice": 808,
+      "totalScore": 1242.40267666616
+    },
+    {
+      "code": "81730",
+      "name": "Ｊｏｓｈｉｎ",
+      "announceDate": "2026-11-06",
+      "periodLabel": "2026-09-30 (2Q)",
+      "sales": {
+        "cur": 218000000000,
+        "prev": 210452000000,
+        "yoy": 3.58656605781841
+      },
+      "profit": {
+        "cur": 2800000000,
+        "prev": 1894000000,
+        "yoy": 47.83526927138332,
+        "label": "純利益"
+      },
+      "odpYoy": 114.57085828343314,
+      "epsYoy": 47.639192139737986,
+      "marginChange": 0.384435981130697,
+      "momentum": {
+        "pct": 54.971857410881796,
+        "days": 488
+      },
+      "avgVolume": 98550.81967213115,
+      "currentPrice": 4130,
+      "totalScore": 188.26758991393046
+    },
+    {
+      "code": "63640",
+      "name": "ＡＩＲＭＡＮ",
+      "announceDate": "2026-11-06",
+      "periodLabel": "2026-09-30 (2Q)",
+      "sales": {
+        "cur": 31500000000,
+        "prev": 27866000000,
+        "yoy": 13.040981841670854
+      },
+      "profit": {
+        "cur": 4000000000,
+        "prev": 2562000000,
+        "yoy": 56.12802498048399,
+        "label": "純利益"
+      },
+      "odpYoy": 55.6951652553947,
+      "epsYoy": 59.27912465136236,
+      "marginChange": 3.5044128419568015,
+      "momentum": {
+        "pct": 39.078590785907856,
+        "days": 488
+      },
+      "avgVolume": 45912.09016393442,
+      "currentPrice": 2566,
+      "totalScore": 172.74356824535482
+    },
+    {
+      "code": "27670",
+      "name": "円谷フィールズホールディングス",
+      "announceDate": "2026-11-06",
+      "periodLabel": "2027-03-31 (FY)",
+      "sales": {
+        "cur": 205300000000,
+        "prev": 170000000000,
+        "yoy": 20.764705882352942
+      },
+      "profit": {
+        "cur": 15000000000,
+        "prev": 12800000000,
+        "yoy": 17.1875,
+        "label": "純利益"
+      },
+      "odpYoy": 23.770491803278688,
+      "epsYoy": 17.14230152170742,
+      "marginChange": -0.22303085871464923,
+      "momentum": {
+        "pct": 44.28238039673279,
+        "days": 488
+      },
+      "avgVolume": 692031.5573770492,
+      "currentPrice": 2473,
+      "totalScore": 102.24492122414948
+    },
+    {
+      "code": "48090",
+      "name": "パラカ",
+      "announceDate": "2026-11-06",
+      "periodLabel": "2026-09-30 (FY)",
+      "sales": {
+        "cur": 18700000000,
+        "prev": 17630000000,
+        "yoy": 6.0692002268859895
+      },
+      "profit": {
+        "cur": 2277000000,
+        "prev": 2044000000,
+        "yoy": 11.399217221135029,
+        "label": "純利益"
+      },
+      "odpYoy": -6.442861987114276,
+      "epsYoy": 11.396095873486535,
+      "marginChange": 0.5825965099596271,
+      "momentum": {
+        "pct": 12.330255296034762,
+        "days": 488
+      },
+      "avgVolume": 18705.122950819674,
+      "currentPrice": 2068,
+      "totalScore": 33.440482707161166
+    }
+  ]
 }
