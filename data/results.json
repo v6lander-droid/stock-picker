@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-11-05T22:10:19.415Z",
+  "generatedAt": "2026-11-06T22:24:37.766Z",
   "config": {
     "daysAhead": 3,
     "maxCount": 500,
     "minVolume": 10000,
     "bulkWindowDays": 75
   },
-  "checkedCount": 215,
-  "noPrevCount": 206,
-  "gateFailCount": 4,
-  "volumeExcluded": 0,
-  "matchedCount": 5,
+  "checkedCount": 365,
+  "noPrevCount": 342,
+  "gateFailCount": 12,
+  "volumeExcluded": 2,
+  "matchedCount": 9,
   "results": [
     {
       "code": "58200",
@@ -32,12 +32,39 @@
       "epsYoy": 473.71225577264653,
       "marginChange": 2.997357863211651,
       "momentum": {
-        "pct": -18.383838383838384,
-        "days": 488
+        "pct": -18.135764944275582,
+        "days": 487
       },
-      "avgVolume": 25614.754098360656,
+      "avgVolume": 25569.609856262832,
       "currentPrice": 808,
-      "totalScore": 1242.40267666616
+      "totalScore": 1242.6507501057226
+    },
+    {
+      "code": "67720",
+      "name": "東京コスモス電機",
+      "announceDate": "2026-11-09",
+      "periodLabel": "2027-03-31 (FY)",
+      "sales": {
+        "cur": 9610000000,
+        "prev": 9420000000,
+        "yoy": 2.0169851380042463
+      },
+      "profit": {
+        "cur": 313000000,
+        "prev": 50000000,
+        "yoy": 526,
+        "label": "純利益"
+      },
+      "odpYoy": 7.674418604651163,
+      "epsYoy": 25.168964585022962,
+      "marginChange": 2.7262383707700093,
+      "momentum": {
+        "pct": null,
+        "days": 0
+      },
+      "avgVolume": null,
+      "currentPrice": null,
+      "totalScore": 549.8911534743813
     },
     {
       "code": "81730",
@@ -59,12 +86,12 @@
       "epsYoy": 47.639192139737986,
       "marginChange": 0.384435981130697,
       "momentum": {
-        "pct": 54.971857410881796,
-        "days": 488
+        "pct": 53.645833333333336,
+        "days": 487
       },
-      "avgVolume": 98550.81967213115,
+      "avgVolume": 98689.11704312115,
       "currentPrice": 4130,
-      "totalScore": 188.26758991393046
+      "totalScore": 186.941565836382
     },
     {
       "code": "63640",
@@ -86,12 +113,93 @@
       "epsYoy": 59.27912465136236,
       "marginChange": 3.5044128419568015,
       "momentum": {
-        "pct": 39.078590785907856,
-        "days": 488
+        "pct": 39.53235454051115,
+        "days": 487
       },
-      "avgVolume": 45912.09016393442,
+      "avgVolume": 45922.792607802876,
       "currentPrice": 2566,
-      "totalScore": 172.74356824535482
+      "totalScore": 173.19733199995812
+    },
+    {
+      "code": "79140",
+      "name": "共同印刷",
+      "announceDate": "2026-11-09",
+      "periodLabel": "2026-09-30 (2Q)",
+      "sales": {
+        "cur": 49000000000,
+        "prev": 47601000000,
+        "yoy": 2.939013886262894
+      },
+      "profit": {
+        "cur": 2300000000,
+        "prev": 1351000000,
+        "yoy": 70.24426350851222,
+        "label": "純利益"
+      },
+      "odpYoy": 49.55134596211366,
+      "epsYoy": 73.37919533041484,
+      "marginChange": 1.855701882442017,
+      "momentum": {
+        "pct": null,
+        "days": 0
+      },
+      "avgVolume": null,
+      "currentPrice": null,
+      "totalScore": 138.3599518059234
+    },
+    {
+      "code": "81040",
+      "name": "クワザワホールディングス",
+      "announceDate": "2026-11-09",
+      "periodLabel": "2026-06-30 (1Q)",
+      "sales": {
+        "cur": 15008000000,
+        "prev": 14496000000,
+        "yoy": 3.532008830022075
+      },
+      "profit": {
+        "cur": 127000000,
+        "prev": 85000000,
+        "yoy": 49.411764705882355,
+        "label": "純利益"
+      },
+      "odpYoy": 52.27272727272727,
+      "epsYoy": 50.349650349650354,
+      "marginChange": 0.25984669839073327,
+      "momentum": {
+        "pct": -0.7194244604316548,
+        "days": 487
+      },
+      "avgVolume": 19019.301848049283,
+      "currentPrice": 690,
+      "totalScore": 104.05523128344305
+    },
+    {
+      "code": "91040",
+      "name": "商船三井",
+      "announceDate": "2026-11-09",
+      "periodLabel": "2026-09-30 (2Q)",
+      "sales": {
+        "cur": 1235000000000,
+        "prev": 869772000000,
+        "yoy": 41.9912344844396
+      },
+      "profit": {
+        "cur": 137000000000,
+        "prev": 116209000000,
+        "yoy": 17.891041141391803,
+        "label": "純利益"
+      },
+      "odpYoy": 9.940928564572845,
+      "epsYoy": 18.20904373610082,
+      "marginChange": -2.2677403791111264,
+      "momentum": {
+        "pct": 31.09805510534846,
+        "days": 487
+      },
+      "avgVolume": 4442201.848049281,
+      "currentPrice": 6471,
+      "totalScore": 100.51983612329445
     },
     {
       "code": "27670",
@@ -113,12 +221,12 @@
       "epsYoy": 17.14230152170742,
       "marginChange": -0.22303085871464923,
       "momentum": {
-        "pct": 44.28238039673279,
-        "days": 488
+        "pct": 36.2534435261708,
+        "days": 487
       },
-      "avgVolume": 692031.5573770492,
+      "avgVolume": 687409.0349075976,
       "currentPrice": 2473,
-      "totalScore": 102.24492122414948
+      "totalScore": 94.2159843535875
     },
     {
       "code": "48090",
@@ -140,12 +248,12 @@
       "epsYoy": 11.396095873486535,
       "marginChange": 0.5825965099596271,
       "momentum": {
-        "pct": 12.330255296034762,
-        "days": 488
+        "pct": 11.844240129799893,
+        "days": 487
       },
-      "avgVolume": 18705.122950819674,
+      "avgVolume": 18714.168377823407,
       "currentPrice": 2068,
-      "totalScore": 33.440482707161166
+      "totalScore": 32.954467540926295
     }
   ]
 }
