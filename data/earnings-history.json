@@ -1,1080 +1,5 @@
 [
   {
-    "code": "98570",
-    "name": "英和",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "17170",
-    "name": "明豊ファシリティワークス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "81390",
-    "name": "ナガホリ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "69070",
-    "name": "ジオマテック",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "59280",
-    "name": "アルメタックス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "61400",
-    "name": "旭ダイヤモンド工業",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "46710",
-    "name": "ファルコホールディングス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "28190",
-    "name": "エバラ食品工業",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "39260",
-    "name": "オープンドア",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "81730",
-    "name": "Ｊｏｓｈｉｎ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "29110",
-    "name": "旭松食品",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "68030",
-    "name": "ティアック",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "84100",
-    "name": "セブン銀行",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "91430",
-    "name": "ＳＧホールディングス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "69640",
-    "name": "サンコー",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "21390",
-    "name": "中広",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "28150",
-    "name": "アリアケジャパン",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "60880",
-    "name": "シグマクシス・ホールディングス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "91300",
-    "name": "共栄タンカー",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "91710",
-    "name": "栗林商船",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "14500",
-    "name": "ＴＡＮＡＫＥＮ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "58300",
-    "name": "いよぎんホールディングス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "63150",
-    "name": "ＴＯＷＡ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "74720",
-    "name": "鳥羽洋行",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "62820",
-    "name": "オイレス工業",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "78400",
-    "name": "フランスベッドホールディングス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "15150",
-    "name": "日鉄鉱業",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "66740",
-    "name": "ジーエス・ユアサ　コーポレーション",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "69250",
-    "name": "ウシオ電機",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "38410",
-    "name": "ジーダット",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "82300",
-    "name": "はせがわ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "69270",
-    "name": "ヘリオス　テクノ　ホールディング",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "32880",
-    "name": "オープンハウスグループ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "59560",
-    "name": "トーソー",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "41690",
-    "name": "ＥＮＥＣＨＡＮＧＥ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "37980",
-    "name": "ＵＬＳグループ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "46150",
-    "name": "神東塗料",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "33930",
-    "name": "スターティアホールディングス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "75090",
-    "name": "アイエーグループ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "87470",
-    "name": "豊トラスティ証券",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "59580",
-    "name": "三洋工業",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "47830",
-    "name": "ＮＣＤ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "27900",
-    "name": "ナフコ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "17210",
-    "name": "コムシスホールディングス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "71920",
-    "name": "日本モーゲージサービス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "88010",
-    "name": "三井不動産",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "90090",
-    "name": "京成電鉄",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "90870",
-    "name": "タカセ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "33150",
-    "name": "日本コークス工業",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "416A0",
-    "name": "富士ユナイトホールディングス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "40280",
-    "name": "石原産業",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "81360",
-    "name": "サンリオ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "29030",
-    "name": "シノブフーズ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "76160",
-    "name": "コロワイド",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "63780",
-    "name": "木村化工機",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "38340",
-    "name": "朝日ネット",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "75950",
-    "name": "アルゴグラフィックス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "26660",
-    "name": "オートウェーブ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "18260",
-    "name": "佐田建設",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "13010",
-    "name": "極洋",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "97880",
-    "name": "ナック",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "97060",
-    "name": "日本空港ビルデング",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "94750",
-    "name": "昭文社ホールディングス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "67870",
-    "name": "メイコー",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "59010",
-    "name": "東洋製罐グループホールディングス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "58200",
-    "name": "三ッ星",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "90720",
-    "name": "ニッコンホールディングス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "46230",
-    "name": "アサヒペン",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "70110",
-    "name": "三菱重工業",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "30360",
-    "name": "アルコニックス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "74120",
-    "name": "アトム",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "36340",
-    "name": "ソケッツ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "48090",
-    "name": "パラカ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "80180",
-    "name": "三共生興",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "72110",
-    "name": "三菱自動車工業",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "79940",
-    "name": "オカムラ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "77020",
-    "name": "ＪＭＳ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "76210",
-    "name": "うかい",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "13750",
-    "name": "ユキグニファクトリー",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "38630",
-    "name": "日本製紙",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "23760",
-    "name": "サイネックス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "83950",
-    "name": "佐賀銀行",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "22290",
-    "name": "カルビー",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "68820",
-    "name": "三社電機製作所",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "79870",
-    "name": "ナカバヤシ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "21120",
-    "name": "塩水港精糖",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "79370",
-    "name": "ツツミ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "57290",
-    "name": "日本精鉱",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "69960",
-    "name": "ニチコン",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "62480",
-    "name": "横田製作所",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "47690",
-    "name": "ＩＣ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "98310",
-    "name": "ヤマダホールディングス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "77920",
-    "name": "コラントッテ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "63640",
-    "name": "ＡＩＲＭＡＮ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "49700",
-    "name": "東洋合成工業",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "39100",
-    "name": "エムケイシステム",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "62770",
-    "name": "ホソカワミクロン",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "66470",
-    "name": "森尾電機",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "43200",
-    "name": "ＣＥホールディングス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "24750",
-    "name": "ＷＤＢホールディングス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "71840",
-    "name": "富山第一銀行",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "97630",
-    "name": "丸建リース",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "70790",
-    "name": "ＷＤＢココ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "83460",
-    "name": "東邦銀行",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "67430",
-    "name": "大同信号",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "42240",
-    "name": "ロンシール工業",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "80120",
-    "name": "長瀬産業",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "24800",
-    "name": "システム・ロケーション",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "77210",
-    "name": "東京計器",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "83360",
-    "name": "武蔵野銀行",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "64600",
-    "name": "セガサミーホールディングス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "76060",
-    "name": "ＴＡＢＡＹＡホールディングス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "77450",
-    "name": "Ａ＆Ｄホロンホールディングス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "27670",
-    "name": "円谷フィールズホールディングス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "26810",
-    "name": "セカンドリテイリング",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "93760",
-    "name": "ユーラシア旅行社",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "79550",
-    "name": "クリナップ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "64790",
-    "name": "ミネベアミツミ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "87890",
-    "name": "フィンテック　グローバル",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "93550",
-    "name": "リンコーコーポレーション",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "94330",
-    "name": "ＫＤＤＩ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "68750",
-    "name": "メガチップス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "45120",
-    "name": "わかもと製薬",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "36870",
-    "name": "フィックスターズ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "47190",
-    "name": "アルファシステムズ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "95350",
-    "name": "広島ガス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "37740",
-    "name": "インターネットイニシアティブ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "52840",
-    "name": "ヤマウホールディングス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "61380",
-    "name": "ダイジェット工業",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "46110",
-    "name": "大日本塗料",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "19050",
-    "name": "テノックス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "52680",
-    "name": "旭コンクリート工業",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "80450",
-    "name": "横浜丸魚",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "82140",
-    "name": "ＡＯＫＩホールディングス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "84240",
-    "name": "芙蓉総合リース",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "52820",
-    "name": "ジオスター",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "64920",
-    "name": "岡野バルブ製造",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "93050",
-    "name": "ヤマタネ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "80750",
-    "name": "神鋼商事",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "85720",
-    "name": "アコム",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "83930",
-    "name": "宮崎銀行",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "77600",
-    "name": "ＩＭＶ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "87720",
-    "name": "アサックス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "62570",
-    "name": "藤商事",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "38420",
-    "name": "ネクストジェン",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "95620",
-    "name": "ビジネスコーチ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "87420",
-    "name": "小林洋行",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "27050",
-    "name": "大戸屋ホールディングス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "80910",
-    "name": "ニチモウ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "28140",
-    "name": "佐藤食品工業",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "46650",
-    "name": "ダスキン",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "19660",
-    "name": "高田工業所",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "57420",
-    "name": "エヌアイシ・オートテック",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "63320",
-    "name": "月島ホールディングス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "54460",
-    "name": "北越メタル",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "85960",
-    "name": "九州リースサービス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "72020",
-    "name": "いすゞ自動車",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "64450",
-    "name": "ジャノメ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "69190",
-    "name": "ケル",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "59020",
-    "name": "ホッカン",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "56020",
-    "name": "栗本鐵工所",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "98160",
-    "name": "ストライダーズ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "78850",
-    "name": "タカノ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "74210",
-    "name": "カッパ・クリエイト",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "90340",
-    "name": "南総通運",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "68360",
-    "name": "ぷらっとホーム",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "32210",
-    "name": "ヨシックスホールディングス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "83650",
-    "name": "富山銀行",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "83590",
-    "name": "八十二長野銀行",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "72310",
-    "name": "トピー工業",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "71340",
-    "name": "アップガレージグループ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "77010",
-    "name": "島津製作所",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "85500",
-    "name": "栃木銀行",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "63070",
-    "name": "サンセイ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "52870",
-    "name": "イトーヨーギョー",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "73990",
-    "name": "ナンシン",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "19510",
-    "name": "エクシオグループ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "98670",
-    "name": "ソレキア",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "93020",
-    "name": "三井倉庫ホールディングス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "66580",
-    "name": "シライ電子工業",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "26130",
-    "name": "Ｊ－オイルミルズ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "23490",
-    "name": "エヌアイデイ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "77520",
-    "name": "リコー",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "37660",
-    "name": "システムズ・デザイン",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "45640",
-    "name": "オンコセラピー・サイエンス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "54610",
-    "name": "中部鋼鈑",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "51860",
-    "name": "ニッタ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "46860",
-    "name": "ジャストシステム",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "46760",
-    "name": "フジ・メディア・ホールディングス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "20010",
-    "name": "ニップン",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "38610",
-    "name": "王子ホールディングス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "67300",
-    "name": "アクセル",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "46350",
-    "name": "東京インキ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "90630",
-    "name": "岡山県貨物運送",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "65070",
-    "name": "シンフォニアテクノロジー",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "67770",
-    "name": "ｓａｎｔｅｃ　Ｈｏｌｄｉｎｇｓ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "13320",
-    "name": "ニッスイ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "30240",
-    "name": "クリエイト",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "32890",
-    "name": "東急不動産ホールディングス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "66520",
-    "name": "ＩＤＥＣ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "84250",
-    "name": "みずほリース",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "35630",
-    "name": "ＦＯＯＤ　＆　ＬＩＦＥ　ＣＯＭＰＡＮＩＥＳ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "90310",
-    "name": "西日本鉄道",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "22090",
-    "name": "井村屋グループ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "43410",
-    "name": "西菱電機",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "66780",
-    "name": "テクノメディカ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "89350",
-    "name": "ＦＪネクストホールディングス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "46260",
-    "name": "太陽ホールディングス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "94010",
-    "name": "ＴＢＳホールディングス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "54110",
-    "name": "ＪＦＥホールディングス",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "80780",
-    "name": "阪和興業",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "67750",
-    "name": "ＴＢグループ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "39450",
-    "name": "スーパーバッグ",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "80590",
-    "name": "第一実業",
-    "announceDate": "2026-11-06"
-  },
-  {
-    "code": "46130",
-    "name": "関西ペイント",
-    "announceDate": "2026-11-06"
-  },
-  {
     "code": "40640",
     "name": "日本カーバイド工業",
     "announceDate": "2026-11-09"
@@ -1823,5 +748,1025 @@
     "code": "45400",
     "name": "ツムラ",
     "announceDate": "2026-11-09"
+  },
+  {
+    "code": "63810",
+    "name": "アネスト岩田",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "33600",
+    "name": "シップヘルスケアホールディングス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "49280",
+    "name": "ノエビアホールディングス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "46280",
+    "name": "エスケー化研",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "67180",
+    "name": "アイホン",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "68490",
+    "name": "日本光電工業",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "58310",
+    "name": "しずおかフィナンシャルグループ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "22210",
+    "name": "岩塚製菓",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "76020",
+    "name": "レダックス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "78720",
+    "name": "エステールホールディングス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "40470",
+    "name": "関東電化工業",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "72200",
+    "name": "武蔵精密工業",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "17800",
+    "name": "ヤマウラ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "42720",
+    "name": "日本化薬",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "41160",
+    "name": "大日精化工業",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "34350",
+    "name": "サンコーテクノ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "72670",
+    "name": "本田技研工業",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "63910",
+    "name": "加地テック",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "40230",
+    "name": "クレハ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "67440",
+    "name": "能美防災",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "83540",
+    "name": "ふくおかフィナンシャルグループ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "82520",
+    "name": "丸井グループ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "76190",
+    "name": "田中商事",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "66480",
+    "name": "かわでん",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "45480",
+    "name": "生化学工業",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "93320",
+    "name": "ＮＩＳＳＯホールディングス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "69820",
+    "name": "リード",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "51210",
+    "name": "藤倉コンポジット",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "31030",
+    "name": "ユニチカ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "49600",
+    "name": "ケミプロ化成",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "74440",
+    "name": "ハリマ共和物産",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "36820",
+    "name": "エンカレッジ・テクノロジ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "39540",
+    "name": "昭和パックス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "17700",
+    "name": "藤田エンジニアリング",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "56440",
+    "name": "メタルアート",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "83380",
+    "name": "筑波銀行",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "34020",
+    "name": "東レ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "18700",
+    "name": "矢作建設工業",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "59390",
+    "name": "大谷工業",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "68990",
+    "name": "ＡＳＴＩ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "22930",
+    "name": "滝沢ハム",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "67410",
+    "name": "日本信号",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "331A0",
+    "name": "メディックス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "53510",
+    "name": "品川リフラ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "65390",
+    "name": "ＭＳ－Ｊａｐａｎ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "48190",
+    "name": "デジタルガレージ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "57060",
+    "name": "三井金属",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "49970",
+    "name": "日本農薬",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "80970",
+    "name": "三愛オブリ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "73370",
+    "name": "ひろぎんホールディングス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "66450",
+    "name": "オムロン",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "17930",
+    "name": "大本組",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "18850",
+    "name": "東亜建設工業",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "71890",
+    "name": "西日本フィナンシャルホールディングス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "18070",
+    "name": "佐藤渡辺",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "36410",
+    "name": "パピレス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "98540",
+    "name": "愛眼",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "38780",
+    "name": "巴川コーポレーション",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "90050",
+    "name": "東急",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "72080",
+    "name": "カネミツ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "93060",
+    "name": "東陽倉庫",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "88350",
+    "name": "太平洋興発",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "85580",
+    "name": "東和銀行",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "71990",
+    "name": "プレミアグループ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "21220",
+    "name": "インタースペース",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "24450",
+    "name": "タカミヤ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "31310",
+    "name": "シンデン・ハイテックス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "92590",
+    "name": "タカヨシホールディングス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "88300",
+    "name": "住友不動産",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "93660",
+    "name": "サンリツ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "25880",
+    "name": "プレミアムウォーターホールディングス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "40950",
+    "name": "日本パーカライジング",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "52330",
+    "name": "太平洋セメント",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "83080",
+    "name": "りそなホールディングス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "68690",
+    "name": "シスメックス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "83680",
+    "name": "百五銀行",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "26740",
+    "name": "ハードオフコーポレーション",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "82190",
+    "name": "青山商事",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "97530",
+    "name": "アイエックス・ナレッジ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "78680",
+    "name": "広済堂ホールディングス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "41020",
+    "name": "丸尾カルシウム",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "68200",
+    "name": "アイコム",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "67940",
+    "name": "フォスター電機",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "80500",
+    "name": "セイコーグループ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "21560",
+    "name": "セーラー広告",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "88410",
+    "name": "テーオーシー",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "57130",
+    "name": "住友金属鉱山",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "60160",
+    "name": "ジャパンエンジンコーポレーション",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "83860",
+    "name": "百十四銀行",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "73050",
+    "name": "新家工業",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "64180",
+    "name": "日本金銭機械",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "61860",
+    "name": "一蔵",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "84160",
+    "name": "高知銀行",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "25310",
+    "name": "宝ホールディングス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "39340",
+    "name": "ベネフィットジャパン",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "70940",
+    "name": "ＮｅｘＴｏｎｅ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "93080",
+    "name": "乾汽船",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "68000",
+    "name": "ヨコオ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "45230",
+    "name": "エーザイ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "68480",
+    "name": "東亜ディーケーケー",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "32910",
+    "name": "飯田グループホールディングス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "64570",
+    "name": "グローリー",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "96440",
+    "name": "タナベコンサルティンググループ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "22240",
+    "name": "コモ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "438A0",
+    "name": "インフキュリオン",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "24830",
+    "name": "翻訳センター",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "93670",
+    "name": "大東港運",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "44710",
+    "name": "三洋化成工業",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "55700",
+    "name": "ジェノバ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "547A0",
+    "name": "ムニノバホールディングス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "39290",
+    "name": "ソーシャルワイヤー",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "47320",
+    "name": "ユー・エス・エス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "69970",
+    "name": "日本ケミコン",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "98880",
+    "name": "ＵＥＸ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "34220",
+    "name": "Ｊ－ＭＡＸ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "94380",
+    "name": "エムティーアイ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "59690",
+    "name": "ロブテックス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "56310",
+    "name": "日本製鋼所",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "70120",
+    "name": "川崎重工業",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "43500",
+    "name": "メディカルシステムネットワーク",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "83670",
+    "name": "南都銀行",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "58030",
+    "name": "フジクラ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "80430",
+    "name": "スターゼン",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "23780",
+    "name": "ルネサンス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "60800",
+    "name": "Ｍ＆Ａキャピタルパートナーズ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "99600",
+    "name": "東テク",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "57260",
+    "name": "大阪チタニウムテクノロジーズ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "51890",
+    "name": "櫻護謨",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "49980",
+    "name": "フマキラー",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "81600",
+    "name": "木曽路",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "23040",
+    "name": "ＣＳＳホールディングス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "70030",
+    "name": "三井Ｅ＆Ｓ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "75020",
+    "name": "プラザホールディングス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "23950",
+    "name": "新日本科学",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "39170",
+    "name": "アイリッジ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "51620",
+    "name": "朝日ラバー",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "79320",
+    "name": "ニッピ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "79430",
+    "name": "ニチハ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "23310",
+    "name": "ＡＬＳＯＫ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "90390",
+    "name": "サカイ引越センター",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "79060",
+    "name": "ヨネックス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "166A0",
+    "name": "タスキホールディングス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "78670",
+    "name": "タカラトミー",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "72690",
+    "name": "スズキ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "95170",
+    "name": "イーレックス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "18200",
+    "name": "西松建設",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "28710",
+    "name": "ニチレイ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "69650",
+    "name": "浜松ホトニクス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "55410",
+    "name": "大平洋金属",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "54060",
+    "name": "神戸製鋼所",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "74820",
+    "name": "シモジマ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "39510",
+    "name": "朝日印刷",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "31230",
+    "name": "サイボー",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "38020",
+    "name": "エコミック",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "21170",
+    "name": "ウェルネオシュガー",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "80610",
+    "name": "西華産業",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "19600",
+    "name": "サンテック",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "50710",
+    "name": "ヴィス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "29370",
+    "name": "サンクゼール",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "96990",
+    "name": "ニシオホールディングス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "22700",
+    "name": "雪印メグミルク",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "24880",
+    "name": "ＪＴＰ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "34430",
+    "name": "川田テクノロジーズ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "80880",
+    "name": "岩谷産業",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "18660",
+    "name": "北野建設",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "35830",
+    "name": "オーベクス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "36280",
+    "name": "データホライゾン",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "19790",
+    "name": "大氣社",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "99840",
+    "name": "ソフトバンクグループ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "99080",
+    "name": "日本電計",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "80850",
+    "name": "ナラサキ産業",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "20550",
+    "name": "日和産業",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "93600",
+    "name": "鈴与シンワート",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "88810",
+    "name": "日神グループホールディングス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "75210",
+    "name": "ムサシ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "69890",
+    "name": "北陸電気工業",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "98900",
+    "name": "マキヤ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "35690",
+    "name": "セーレン",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "543A0",
+    "name": "ＡＲＣＨＩＯＮ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "59730",
+    "name": "トーアミ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "67630",
+    "name": "帝国通信工業",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "545A0",
+    "name": "トランヴィア",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "98800",
+    "name": "イノテック",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "63840",
+    "name": "昭和真空",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "72700",
+    "name": "ＳＵＢＡＲＵ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "43880",
+    "name": "エーアイ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "53930",
+    "name": "ニチアス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "68450",
+    "name": "アズビル",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "24330",
+    "name": "博報堂ＤＹホールディングス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "99860",
+    "name": "蔵王産業",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "81540",
+    "name": "加賀電子",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "77330",
+    "name": "オリンパス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "85440",
+    "name": "京葉銀行",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "41820",
+    "name": "三菱瓦斯化学",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "71870",
+    "name": "ジェイリース",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "24320",
+    "name": "ディー・エヌ・エー",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "80860",
+    "name": "ニプロ",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "79180",
+    "name": "ヴィア・ホールディングス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "50210",
+    "name": "コスモエネルギーホールディングス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "27330",
+    "name": "あらた",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "18480",
+    "name": "富士ピー・エス",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "26070",
+    "name": "不二製油",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "45540",
+    "name": "富士製薬工業",
+    "announceDate": "2026-11-10"
+  },
+  {
+    "code": "68550",
+    "name": "日本電子材料",
+    "announceDate": "2026-11-10"
   }
 ]
