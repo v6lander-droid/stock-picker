@@ -1,178 +1,43 @@
 {
-  "generatedAt": "2026-11-11T22:05:52.501Z",
+  "generatedAt": "2026-11-15T21:53:02.259Z",
   "config": {
     "daysAhead": 3,
     "maxCount": 500,
     "minVolume": 10000,
     "bulkWindowDays": 75
   },
-  "checkedCount": 306,
-  "noPrevCount": 290,
-  "gateFailCount": 7,
-  "volumeExcluded": 3,
-  "matchedCount": 6,
+  "checkedCount": 35,
+  "noPrevCount": 33,
+  "gateFailCount": 1,
+  "volumeExcluded": 0,
+  "matchedCount": 1,
   "results": [
     {
-      "code": "18470",
-      "name": "イチケン",
-      "announceDate": "2026-11-12",
-      "periodLabel": "2026-09-30 (2Q)",
-      "sales": {
-        "cur": 55000000000,
-        "prev": 49188000000,
-        "yoy": 11.815890054484832
-      },
-      "profit": {
-        "cur": 5100000000,
-        "prev": 2524000000,
-        "yoy": 102.06022187004756,
-        "label": "純利益"
-      },
-      "odpYoy": 101.28824476650564,
-      "epsYoy": 1.0266290906999462,
-      "marginChange": 4.141394427317824,
-      "momentum": {
-        "pct": 166.26746506986026,
-        "days": 488
-      },
-      "avgVolume": 25854.713114754097,
-      "currentPrice": 3335,
-      "totalScore": 339.58380277763115
-    },
-    {
-      "code": "75500",
-      "name": "ゼンショーホールディングス",
-      "announceDate": "2026-11-12",
+      "code": "72560",
+      "name": "河西工業",
+      "announceDate": "2026-11-16",
       "periodLabel": "2026-06-30 (1Q)",
       "sales": {
-        "cur": 324808000000,
-        "prev": 290421000000,
-        "yoy": 11.840397216454733
+        "cur": 55288000000,
+        "prev": 48111000000,
+        "yoy": 14.917586414749225
       },
       "profit": {
-        "cur": 15172000000,
-        "prev": 8020000000,
-        "yoy": 89.17705735660849,
+        "cur": 3135000000,
+        "prev": -542000000,
+        "yoy": 678.4132841328413,
         "label": "純利益"
       },
-      "odpYoy": 52.614001284521514,
-      "epsYoy": 87.6157169306727,
-      "marginChange": 1.9095589219601514,
+      "odpYoy": 635.7624831309041,
+      "epsYoy": 210.76555023923444,
+      "marginChange": 6.796869697525576,
       "momentum": {
-        "pct": 65.53024807776005,
-        "days": 488
+        "pct": 149.39759036144576,
+        "days": 486
       },
-      "avgVolume": 565325.4098360656,
-      "currentPrice": 11410,
-      "totalScore": 240.4816796023407
-    },
-    {
-      "code": "44240",
-      "name": "Ａｍａｚｉａ",
-      "announceDate": "2026-11-12",
-      "periodLabel": "2026-09-30 (FY)",
-      "sales": {
-        "cur": 3321000000,
-        "prev": 2843000000,
-        "yoy": 16.813225466056984
-      },
-      "profit": {
-        "cur": -99000000,
-        "prev": -372000000,
-        "yoy": 73.38709677419355,
-        "label": "純利益"
-      },
-      "odpYoy": 66.1064425770308,
-      "epsYoy": 73.28621908127208,
-      "marginChange": 10.103739799269256,
-      "momentum": {
-        "pct": 2.0172910662824206,
-        "days": 488
-      },
-      "avgVolume": 202978.89344262294,
-      "currentPrice": 354,
-      "totalScore": 182.1214237342229
-    },
-    {
-      "code": "63630",
-      "name": "酉島製作所",
-      "announceDate": "2026-11-12",
-      "periodLabel": "2027-03-31 (FY)",
-      "sales": {
-        "cur": 103900000000,
-        "prev": 89000000000,
-        "yoy": 16.741573033707866
-      },
-      "profit": {
-        "cur": 7100000000,
-        "prev": 3600000000,
-        "yoy": 97.22222222222221,
-        "label": "純利益"
-      },
-      "odpYoy": -5.88235294117647,
-      "epsYoy": 97.21491228070175,
-      "marginChange": 2.7885499237598816,
-      "momentum": {
-        "pct": 8.103448275862068,
-        "days": 488
-      },
-      "avgVolume": 140753.2786885246,
-      "currentPrice": 3135,
-      "totalScore": 173.31062304907456
-    },
-    {
-      "code": "63510",
-      "name": "鶴見製作所",
-      "announceDate": "2026-11-12",
-      "periodLabel": "2026-09-30 (2Q)",
-      "sales": {
-        "cur": 37000000000,
-        "prev": 35759000000,
-        "yoy": 3.4704549903520796
-      },
-      "profit": {
-        "cur": 4200000000,
-        "prev": 3548000000,
-        "yoy": 18.376550169109358,
-        "label": "純利益"
-      },
-      "odpYoy": 2.9866117404737382,
-      "epsYoy": 19.329442106691996,
-      "marginChange": 1.429373667411646,
-      "momentum": {
-        "pct": 27.704918032786885,
-        "days": 488
-      },
-      "avgVolume": 39698.975409836065,
-      "currentPrice": 2337,
-      "totalScore": 63.56869745065448
-    },
-    {
-      "code": "25850",
-      "name": "ライフドリンク　カンパニー",
-      "announceDate": "2026-11-12",
-      "periodLabel": "2026-06-30 (1Q)",
-      "sales": {
-        "cur": 17414000000,
-        "prev": 13444000000,
-        "yoy": 29.529901814936032
-      },
-      "profit": {
-        "cur": 1105000000,
-        "prev": 998000000,
-        "yoy": 10.721442885771543,
-        "label": "純利益"
-      },
-      "odpYoy": 18.813216453135535,
-      "epsYoy": 11.576741749607129,
-      "marginChange": -1.0779167343118266,
-      "momentum": {
-        "pct": -13.976221928665785,
-        "days": 488
-      },
-      "avgVolume": 727420.0819672131,
-      "currentPrice": 1628,
-      "totalScore": 39.314268404789466
+      "avgVolume": 841076.5432098765,
+      "currentPrice": 414,
+      "totalScore": 1279.5862169891568
     }
   ]
 }
