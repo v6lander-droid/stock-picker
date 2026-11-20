@@ -1,43 +1,15 @@
 {
-  "generatedAt": "2026-11-15T21:53:02.259Z",
+  "generatedAt": "2026-11-20T21:28:11.660Z",
   "config": {
     "daysAhead": 3,
     "maxCount": 500,
     "minVolume": 10000,
     "bulkWindowDays": 75
   },
-  "checkedCount": 35,
-  "noPrevCount": 33,
-  "gateFailCount": 1,
+  "checkedCount": 0,
+  "noPrevCount": 0,
+  "gateFailCount": 0,
   "volumeExcluded": 0,
-  "matchedCount": 1,
-  "results": [
-    {
-      "code": "72560",
-      "name": "河西工業",
-      "announceDate": "2026-11-16",
-      "periodLabel": "2026-06-30 (1Q)",
-      "sales": {
-        "cur": 55288000000,
-        "prev": 48111000000,
-        "yoy": 14.917586414749225
-      },
-      "profit": {
-        "cur": 3135000000,
-        "prev": -542000000,
-        "yoy": 678.4132841328413,
-        "label": "純利益"
-      },
-      "odpYoy": 635.7624831309041,
-      "epsYoy": 210.76555023923444,
-      "marginChange": 6.796869697525576,
-      "momentum": {
-        "pct": 149.39759036144576,
-        "days": 486
-      },
-      "avgVolume": 841076.5432098765,
-      "currentPrice": 414,
-      "totalScore": 1279.5862169891568
-    }
-  ]
+  "matchedCount": 0,
+  "results": []
 }
